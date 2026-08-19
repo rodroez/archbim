@@ -1,0 +1,1356 @@
+<!DOCTYPE html>
+<html lang="es-AR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>ARCHBIM Studio — Implementación y consultoría BIM</title>
+<meta name="description" content="ARCHBIM Studio implementa y opera flujos BIM para estudios de arquitectura e ingeniería: un modelo único, coordinado, desde el anteproyecto hasta la documentación ejecutiva.">
+<meta name="theme-color" content="#0A2A2E">
+<meta name="author" content="ARCHBIM Studio">
+<link rel="canonical" href="https://archbim-studio.vercel.app/">
+<meta property="og:type" content="website">
+<meta property="og:site_name" content="ARCHBIM Studio">
+<meta property="og:url" content="https://archbim-studio.vercel.app/">
+<meta property="og:title" content="ARCHBIM Studio — Implementación y consultoría BIM">
+<meta property="og:description" content="Implementación, consultoría y proyecto BIM para estudios de arquitectura e ingeniería. Un modelo único, coordinado, desde el anteproyecto hasta la documentación ejecutiva. Buenos Aires, Argentina.">
+<meta property="og:locale" content="es_AR">
+<meta property="og:image" content="https://archbim-studio.vercel.app/og-image.png">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta property="og:image:alt" content="ARCHBIM Studio — Coordinar antes de construir.">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="ARCHBIM Studio — Implementación y consultoría BIM">
+<meta name="twitter:description" content="Implementación, consultoría y proyecto BIM para estudios de arquitectura e ingeniería. Buenos Aires, Argentina.">
+<meta name="twitter:image" content="https://archbim-studio.vercel.app/og-image.png">
+<link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' fill='%2316181A'/%3E%3Cg transform='translate(12,12) scale(0.4)'%3E%3Cg fill='none' stroke='%23F3F1ED' stroke-width='9' stroke-linecap='square' stroke-linejoin='miter'%3E%3Cpolygon points='50,10 88,32 50,54 12,32' fill='%23F3F1ED' stroke='none'/%3E%3Cpolygon points='50,10 88,32 88,68 50,90 12,68 12,32'/%3E%3Cline x1='50' y1='54' x2='50' y2='90'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E">
+<link rel="icon" type="image/png" sizes="32x32" href="/favicon-32.png">
+<link rel="icon" type="image/png" sizes="16x16" href="/favicon-16.png">
+<link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png">
+<link rel="manifest" href="/site.webmanifest">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Archivo:ital,wght@0,300;0,400;0,500;0,600;0,700;1,400&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet">
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "ProfessionalService",
+  "name": "ARCHBIM Studio",
+  "url": "https://archbim-studio.vercel.app/",
+  "image": "https://archbim-studio.vercel.app/og-image.png",
+  "description": "Implementación y consultoría BIM para estudios de arquitectura e ingeniería: coordinación de modelo, documentación de anteproyecto y ejecutiva.",
+  "areaServed": {
+    "@type": "Country",
+    "name": "Argentina"
+  },
+  "address": {
+    "@type": "PostalAddress",
+    "addressLocality": "Buenos Aires",
+    "addressCountry": "AR"
+  },
+  "makesOffer": [
+    { "@type": "Offer", "itemOffered": { "@type": "Service", "name": "Implementación BIM" } },
+    { "@type": "Offer", "itemOffered": { "@type": "Service", "name": "Consultoría BIM" } },
+    { "@type": "Offer", "itemOffered": { "@type": "Service", "name": "Proyecto BIM" } },
+    { "@type": "Offer", "itemOffered": { "@type": "Service", "name": "Capacitación en línea" } }
+  ]
+}
+</script>
+<style>
+  :root{
+    --ink:#16181A;
+    --descriptor:#3A3D40;
+    --volume:#5A5D60;
+    --metadata:#6D6965;
+    --filete:#C6C2BA;
+    --paper:#F3F1ED;
+    --white:#FFFFFF;
+    --accent:#0F7A8C;
+    --accent-mid:#1C93A0;
+    --accent-light:#8FD0D6;
+    --accent-tint:#E4F3F4;
+    --accent-deep:#0B5A66;
+    --accent-glow:#4FE6DE;
+    --max: 1280px;
+    --pad: clamp(20px, 4vw, 64px);
+  }
+  *{box-sizing:border-box;}
+  html{scroll-behavior:smooth;}
+  body{
+    margin:0;
+    background:var(--paper);
+    color:var(--ink);
+    font-family:"Archivo", sans-serif;
+    font-weight:400;
+    -webkit-font-smoothing:antialiased;
+    line-height:1.5;
+  }
+  img,svg{display:block;max-width:100%;}
+  a{color:inherit;}
+  ul{margin:0;padding:0;}
+  a:focus-visible, button:focus-visible, summary:focus-visible, input:focus-visible, select:focus-visible, textarea:focus-visible{
+    outline:2px solid var(--accent-deep);
+    outline-offset:3px;
+    border-radius:2px;
+  }
+  .hero-panel :focus-visible{ outline-color:var(--accent-glow); }
+  .mono{
+    font-family:"IBM Plex Mono", monospace;
+    letter-spacing:0.02em;
+  }
+  .wrap{
+    max-width:var(--max);
+    margin:0 auto;
+    padding-left:var(--pad);
+    padding-right:var(--pad);
+  }
+  section[id], .service-card[id]{ scroll-margin-top:96px; }
+
+  /* ---------- eyebrow / sheet label ---------- */
+  .sheet-label{
+    display:flex;
+    align-items:center;
+    gap:10px;
+    font-family:"IBM Plex Mono", monospace;
+    font-size:12.5px;
+    letter-spacing:0.12em;
+    text-transform:uppercase;
+    color:var(--metadata);
+    margin-bottom:22px;
+  }
+  .sheet-label::before{
+    content:"";
+    width:22px;
+    height:1px;
+    background:var(--metadata);
+    display:block;
+  }
+
+  /* ---------- grid bubble ---------- */
+  .bubble{
+    width:34px;height:34px;
+    border-radius:50%;
+    border:1.5px solid var(--accent);
+    color:var(--accent-deep);
+    display:flex;align-items:center;justify-content:center;
+    font-family:"IBM Plex Mono", monospace;
+    font-size:14px;
+    flex-shrink:0;
+    background:var(--accent-tint);
+  }
+
+  /* ================= NAV ================= */
+  header{
+    position:sticky; top:0; z-index:50;
+    background:rgba(243,241,237,0.94);
+    backdrop-filter:blur(6px);
+    border-bottom:1px solid var(--filete);
+  }
+  .nav{
+    display:flex;
+    align-items:center;
+    justify-content:space-between;
+    height:76px;
+  }
+  .brand{ display:flex; align-items:center; }
+  .brand svg{ height:30px; width:auto; }
+  nav.links{ display:flex; align-items:center; gap:8px; }
+  nav.links > a{
+    text-decoration:none;
+    font-size:14.5px;
+    color:var(--descriptor);
+    position:relative;
+    padding:10px 12px;
+  }
+  nav.links > a::after{
+    content:"";
+    position:absolute; left:12px; right:12px; bottom:2px;
+    height:1px; background:var(--ink);
+    transform:scaleX(0); transform-origin:left;
+    transition:transform .25s ease;
+  }
+  nav.links > a:hover::after{ transform:scaleX(1); }
+
+  /* ---------- servicios dropdown ---------- */
+  .has-dropdown{ position:relative; }
+  .dropdown-btn{
+    font-family:"Archivo", sans-serif;
+    font-size:14.5px;
+    color:var(--descriptor);
+    background:none; border:none; cursor:pointer;
+    padding:10px 12px;
+    display:flex; align-items:center; gap:6px;
+  }
+  .dropdown-btn svg{ width:9px; height:9px; transition:transform .2s ease; }
+  .has-dropdown.open .dropdown-btn svg{ transform:rotate(180deg); }
+  .dropdown-panel{
+    position:absolute;
+    top:100%; left:50%;
+    transform:translate(-50%,-6px);
+    width:420px;
+    background:var(--white);
+    border:1px solid var(--filete);
+    box-shadow:0 18px 40px rgba(22,24,26,0.10);
+    padding:10px;
+    display:grid;
+    grid-template-columns:1fr 1fr;
+    gap:2px;
+    opacity:0; visibility:hidden;
+    transition:opacity .18s ease, transform .18s ease, visibility .18s;
+    z-index:60;
+  }
+  .has-dropdown.open .dropdown-panel,
+  .has-dropdown:hover .dropdown-panel{
+    opacity:1; visibility:visible; transform:translate(-50%,0);
+  }
+  .dropdown-item{
+    display:flex; flex-direction:column; gap:4px;
+    padding:14px 14px;
+    text-decoration:none;
+    border-radius:2px;
+  }
+  .dropdown-item:hover{ background:var(--accent-tint); }
+  .dropdown-item .dtitle{
+    display:flex; align-items:center; gap:8px;
+    font-size:14px; font-weight:600; color:var(--ink);
+  }
+  .dropdown-item .dtitle .bubble{ width:22px;height:22px;font-size:11px; }
+  .dropdown-item .ddesc{ font-size:12px; color:var(--metadata); padding-left:30px; }
+  .dropdown-foot{
+    grid-column:1 / -1;
+    border-top:1px solid var(--filete);
+    margin-top:6px; padding-top:10px;
+    text-align:right;
+  }
+  .dropdown-foot a{
+    font-family:"IBM Plex Mono", monospace;
+    font-size:12px;
+    text-decoration:none;
+    color:var(--accent-deep);
+  }
+
+  .nav-cta{
+    font-family:"IBM Plex Mono", monospace;
+    font-size:13px;
+    text-decoration:none;
+    color:var(--white);
+    background:var(--ink);
+    padding:11px 20px;
+    border:1px solid var(--ink);
+    white-space:nowrap;
+  }
+  .nav-cta:hover{ background:var(--accent-deep); border-color:var(--accent-deep); }
+  .burger{
+    display:none;
+    flex-direction:column;
+    gap:5px;
+    background:none;border:none;cursor:pointer;
+    padding:8px;
+  }
+  .burger span{ width:22px; height:1.5px; background:var(--ink); display:block; }
+  .mobile-panel{
+    display:none;
+    flex-direction:column;
+    padding:8px var(--pad) 28px;
+    border-bottom:1px solid var(--filete);
+    background:var(--paper);
+  }
+  .mobile-panel a{
+    color:var(--ink);
+    text-decoration:none;
+    padding:14px 0;
+    border-bottom:1px solid var(--filete);
+    font-size:15px;
+  }
+  .mobile-panel a.sub{ padding-left:16px; font-size:14px; color:var(--descriptor); }
+  .mobile-panel a:last-child{ border-bottom:none; }
+  body.nav-open .mobile-panel{ display:flex; }
+
+  /* ================= HERO ================= */
+  .hero-panel{
+    position:relative;
+    overflow:hidden;
+    background:
+      radial-gradient(circle at 88% 8%, rgba(143,208,214,0.16), transparent 42%),
+      linear-gradient(155deg, #0A0C0E 0%, #0B2A2E 52%, #0A3A40 100%);
+    padding:clamp(56px,8vw,104px) 0;
+  }
+  .hero-atmosphere{
+    position:absolute; inset:0;
+    z-index:0;
+    pointer-events:none;
+    background-image:radial-gradient(rgba(255,255,255,0.055) 1px, transparent 1px);
+    background-size:24px 24px;
+  }
+  .hero-atmosphere svg{
+    position:absolute;
+    right:-20%; bottom:-30%;
+    width:56%; max-width:480px; height:auto;
+    opacity:0.14;
+  }
+  .hero-grid{
+    position:relative;
+    z-index:1;
+    display:grid;
+    grid-template-columns:1.05fr 0.95fr;
+    gap:clamp(28px,4vw,56px);
+    align-items:center;
+  }
+  .hero-logo-tile{
+    background:var(--white);
+    display:inline-flex;
+    align-items:center;
+    padding:12px 18px;
+    border-radius:12px;
+    margin-bottom:30px;
+    width:fit-content;
+  }
+  .hero-logo-tile svg{ height:24px; width:auto; }
+  .eyebrow{
+    font-family:"IBM Plex Mono", monospace;
+    font-size:13px;
+    letter-spacing:0.14em;
+    text-transform:uppercase;
+    color:var(--metadata);
+    margin:0 0 26px;
+    display:flex; align-items:center; gap:12px;
+  }
+  .eyebrow .dot{ width:6px;height:6px;border-radius:50%;background:var(--volume); }
+  .hero-panel .eyebrow{ color:rgba(255,255,255,0.82); }
+  .hero-panel .eyebrow .dot{ background:var(--accent-glow); }
+  h1.headline{
+    font-size:clamp(36px, 4.6vw, 54px);
+    line-height:1.1;
+    letter-spacing:-0.01em;
+    margin:0 0 22px;
+  }
+  h1.headline .w{ font-weight:600; }
+  h1.headline .l{ display:block; font-weight:400; font-style:italic; color:var(--descriptor); }
+  .hero-panel h1.headline{ color:var(--white); }
+  .hero-panel h1.headline .w{ color:var(--white); }
+  .hero-panel h1.headline .l{ color:rgba(255,255,255,0.75); }
+  .lede{
+    font-size:clamp(15.5px, 1.4vw, 17.5px);
+    color:var(--descriptor);
+    max-width:52ch;
+    margin:0 0 34px;
+  }
+  .hero-panel .lede{ color:rgba(255,255,255,0.88); }
+  .cta-row{
+    display:flex;
+    flex-wrap:wrap;
+    gap:14px;
+    align-items:center;
+    margin-bottom:28px;
+  }
+  .btn{
+    font-family:"IBM Plex Mono", monospace;
+    font-size:13.5px;
+    letter-spacing:0.01em;
+    text-decoration:none;
+    padding:15px 22px;
+    display:inline-flex;
+    align-items:center;
+    gap:10px;
+    border:1px solid var(--ink);
+    transition:background .2s ease, color .2s ease, opacity .2s ease, border-color .2s ease;
+    cursor:pointer;
+  }
+  .btn-primary{ background:var(--ink); color:var(--white); border-color:var(--ink); }
+  .btn-primary:hover{ background:var(--accent-deep); border-color:var(--accent-deep); }
+  .btn-outline{ background:transparent; color:var(--ink); }
+  .btn-outline:hover{ background:var(--ink); color:var(--white); }
+  .hero-panel .btn-primary{ background:var(--white); color:var(--ink); border-color:var(--white); }
+  .hero-panel .btn-primary:hover{ background:var(--accent-glow); border-color:var(--accent-glow); color:var(--ink); }
+  .hero-panel .btn-outline{ color:var(--white); border-color:rgba(255,255,255,0.4); }
+  .hero-panel .btn-outline:hover{ background:rgba(255,255,255,0.1); color:var(--white); border-color:rgba(255,255,255,0.7); }
+  .compat-row{
+    font-family:"IBM Plex Mono", monospace;
+    font-size:12px;
+    color:rgba(255,255,255,0.84);
+    letter-spacing:.02em;
+  }
+  .compat-row b{ color:#fff; font-weight:500; }
+  .badge{
+    font-family:"IBM Plex Mono", monospace;
+    font-size:10.5px;
+    letter-spacing:0.08em;
+    text-transform:uppercase;
+    background:var(--paper);
+    border:1px solid var(--metadata);
+    color:var(--metadata);
+    padding:2px 7px;
+  }
+
+  /* ---------- hero visual ---------- */
+  .hero-visual{
+    position:relative;
+    display:flex;
+    flex-direction:column;
+    align-items:center;
+    justify-content:center;
+    padding:clamp(12px,2vw,20px);
+  }
+  .hero-visual::before{
+    content:"";
+    position:absolute;
+    width:min(340px,80%); aspect-ratio:1;
+    background:radial-gradient(circle, rgba(79,230,222,0.30), transparent 68%);
+    filter:blur(30px);
+    z-index:-1;
+  }
+  .hero-visual svg{ width:100%; max-width:280px; height:auto; overflow:visible; }
+  .hero-caption{
+    margin-top:14px;
+    font-size:11.5px;
+    color:rgba(255,255,255,0.62);
+    letter-spacing:.03em;
+  }
+  .node-label{ font-family:"IBM Plex Mono", monospace; font-size:10.5px; fill:rgba(255,255,255,0.78); }
+  .dim-line{ stroke:rgba(255,255,255,0.18); stroke-width:1; }
+  .lvl{ opacity:0; transform:translateY(16px); transition:opacity .7s ease, transform .7s ease; }
+  .hero-visual.in-view .lvl{ opacity:1; transform:translateY(0); }
+  .hero-visual.in-view .n0{ transition-delay:.05s; }
+  .hero-visual.in-view .n1{ transition-delay:.18s; }
+  .hero-visual.in-view .n2{ transition-delay:.31s; }
+  .hero-visual.in-view .n3{ transition-delay:.44s; }
+
+  /* ---------- client monogram marks (placeholder — no real logo files supplied) ---------- */
+  .mark{
+    flex-shrink:0;
+    display:flex; align-items:center; justify-content:center;
+    width:30px; height:30px;
+    border:1px solid var(--filete);
+    border-radius:6px;
+    background:var(--white);
+    font-family:"IBM Plex Mono", monospace;
+    font-weight:500;
+    font-size:8.5px;
+    letter-spacing:0;
+    padding:0 2px;
+    color:var(--accent-deep);
+  }
+
+  /* ================= SECTION GENERIC ================= */
+  section.sheet{ padding:clamp(64px,9vw,120px) 0; }
+  section.sheet + section.sheet{ border-top:1px solid var(--filete); }
+  .sheet-head{
+    display:flex;
+    justify-content:space-between;
+    align-items:flex-end;
+    gap:40px;
+    margin-bottom:56px;
+    flex-wrap:wrap;
+  }
+  .sheet-head h2{
+    font-size:clamp(28px,3.6vw,44px);
+    line-height:1.08;
+    letter-spacing:-0.01em;
+    margin:0;
+    max-width:20ch;
+    font-weight:500;
+  }
+  .sheet-note{
+    font-family:"IBM Plex Mono", monospace;
+    font-size:12.5px;
+    color:var(--metadata);
+    max-width:30ch;
+    text-align:right;
+  }
+
+  /* ---------- services grid ---------- */
+  .services-grid{
+    display:grid;
+    grid-template-columns:repeat(2,1fr);
+    border-top:1px solid var(--filete);
+    border-left:1px solid var(--filete);
+  }
+  .service-card{
+    border-right:1px solid var(--filete);
+    border-bottom:1px solid var(--filete);
+    padding:clamp(26px,3vw,38px);
+    display:flex;
+    flex-direction:column;
+  }
+  .service-card .top-row{ display:flex; align-items:center; gap:12px; margin-bottom:16px; flex-wrap:wrap; }
+  .service-card h3{ font-size:clamp(18px,1.9vw,22px); font-weight:600; margin:0; letter-spacing:-0.01em; }
+  .service-card p{ font-size:14.5px; color:var(--descriptor); margin:0 0 18px; flex-grow:1; }
+  .service-card .tag-row{ display:flex; gap:8px; flex-wrap:wrap; margin:-6px 0 18px; }
+  .service-card .tag{
+    font-family:"IBM Plex Mono", monospace;
+    font-size:11px; letter-spacing:.02em;
+    color:var(--accent-deep);
+    background:var(--accent-tint);
+    border:1px solid var(--accent-light);
+    padding:4px 9px;
+  }
+  .service-card .alt-link{ margin-top:auto; align-self:flex-start; }
+  .alt-link{
+    font-family:"IBM Plex Mono", monospace;
+    font-size:13px;
+    text-decoration:none;
+    color:var(--ink);
+    border-bottom:1px solid var(--ink);
+    padding-bottom:2px;
+    transition:color .2s ease, border-color .2s ease;
+  }
+  .alt-link:hover{ color:var(--accent-deep); border-color:var(--accent-deep); }
+
+  /* ---------- benefits grid ---------- */
+  .benefits{
+    display:grid;
+    grid-template-columns:repeat(4,1fr);
+    gap:0;
+    border-top:1px solid var(--filete);
+  }
+  .benefit{
+    border-right:1px solid var(--filete);
+    border-bottom:1px solid var(--filete);
+    padding:28px 24px 32px;
+  }
+  .benefit:last-child{ border-right:none; }
+  .benefit .bubble{ margin-bottom:22px; }
+  .benefit h4{ font-size:16.5px; font-weight:600; margin:0 0 10px; }
+  .benefit p{ font-size:13.5px; color:var(--descriptor); margin:0; }
+
+  /* ---------- proyectos ---------- */
+  .case{
+    display:grid;
+    grid-template-columns:0.9fr 1.1fr;
+    gap:0;
+    border:1px solid var(--filete);
+  }
+  .case-art{
+    background:var(--white);
+    padding:clamp(28px,4vw,50px);
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    border-right:1px solid var(--filete);
+  }
+  .case-art svg{ width:100%; max-width:340px; height:auto; }
+  .case-body{
+    padding:clamp(28px,4vw,50px);
+    display:flex;
+    flex-direction:column;
+    justify-content:center;
+  }
+  .tags{ display:flex; flex-wrap:wrap; gap:8px; margin-bottom:18px; }
+  .tag{
+    font-family:"IBM Plex Mono", monospace;
+    font-size:10.5px;
+    letter-spacing:.06em;
+    text-transform:uppercase;
+    border:1px solid var(--accent-light);
+    background:var(--accent-tint);
+    color:var(--accent-deep);
+    padding:4px 9px;
+  }
+  .case-body h3{
+    font-size:clamp(24px,3vw,32px);
+    letter-spacing:-0.01em;
+    margin:0 0 10px;
+    font-weight:600;
+  }
+  .case-loc{
+    font-family:"IBM Plex Mono", monospace;
+    font-size:13px;
+    color:var(--volume);
+    margin-bottom:22px;
+  }
+  .case-body p.desc{ color:var(--descriptor); font-size:15px; max-width:52ch; margin:0 0 24px; }
+  .case-meta{ display:flex; gap:32px; flex-wrap:wrap; margin-bottom:26px; }
+  .case-meta div{ font-size:13px; }
+  .case-meta .k{ font-family:"IBM Plex Mono", monospace; color:var(--metadata); font-size:11px; text-transform:uppercase; letter-spacing:.08em; margin-bottom:4px; }
+  .case-cta{ text-align:right; }
+
+  /* ---------- clientes ---------- */
+  .clients{
+    display:grid;
+    grid-template-columns:repeat(2,1fr);
+    border-top:1px solid var(--filete);
+    border-left:1px solid var(--filete);
+  }
+  .client{
+    border-right:1px solid var(--filete);
+    border-bottom:1px solid var(--filete);
+    padding:24px 28px;
+    display:flex;
+    justify-content:space-between;
+    align-items:center;
+    gap:16px;
+    transition:background .2s ease;
+  }
+  .client:hover{ background:var(--accent-tint); }
+  .client-id{ display:flex; align-items:center; gap:16px; }
+  .mark-lg{ width:42px; height:42px; font-size:12px; border-radius:8px; }
+  .client .name{ font-size:16.5px; font-weight:500; }
+  .client .loc{
+    font-family:"IBM Plex Mono", monospace;
+    font-size:11.5px;
+    color:var(--metadata);
+    text-transform:uppercase;
+    letter-spacing:.04em;
+    white-space:nowrap;
+  }
+
+  /* ---------- planes / como empezar ---------- */
+  .plans{
+    display:grid;
+    grid-template-columns:repeat(3,1fr);
+    gap:1px;
+    background:var(--filete);
+    border:1px solid var(--filete);
+  }
+  .plan-card{
+    background:var(--paper);
+    padding:32px 28px;
+    display:flex;
+    flex-direction:column;
+    gap:14px;
+    position:relative;
+  }
+  .plan-card.featured{ background:var(--accent-tint); }
+  .plan-badge{
+    position:absolute; top:-1px; right:-1px;
+    font-family:"IBM Plex Mono", monospace;
+    font-size:10px; letter-spacing:.06em; text-transform:uppercase;
+    background:var(--accent); color:var(--white);
+    padding:5px 10px;
+  }
+  .plan-card .num{ font-family:"IBM Plex Mono", monospace; font-size:12px; color:var(--metadata); }
+  .plan-card h4{ margin:0; font-size:19px; font-weight:600; }
+  .plan-card > p{ margin:0; font-size:13.5px; color:var(--descriptor); }
+  .plan-list{ margin:4px 0 8px; border-top:1px solid var(--filete); padding-top:14px; flex-grow:1; }
+  .plan-list div{
+    font-family:"IBM Plex Mono", monospace;
+    font-size:12px; color:var(--descriptor);
+    padding:5px 0; display:flex; gap:8px;
+  }
+  .plan-list div::before{ content:"–"; color:var(--metadata); }
+
+  /* ---------- FAQ ---------- */
+  .faq{ max-width:900px; border-top:1px solid var(--filete); }
+  .faq details{
+    border-bottom:1px solid var(--filete);
+    padding:22px 0;
+  }
+  .faq summary{
+    list-style:none;
+    cursor:pointer;
+    display:flex;
+    justify-content:space-between;
+    align-items:center;
+    gap:20px;
+    font-size:17px;
+    font-weight:500;
+  }
+  .faq summary::-webkit-details-marker{ display:none; }
+  .faq summary .plus{
+    flex-shrink:0;
+    width:22px;height:22px;
+    border:1px solid var(--ink);
+    border-radius:50%;
+    position:relative;
+  }
+  .faq summary .plus::before, .faq summary .plus::after{
+    content:"";
+    position:absolute; top:50%; left:50%;
+    background:var(--ink);
+    transform:translate(-50%,-50%);
+  }
+  .faq summary .plus::before{ width:9px; height:1px; }
+  .faq summary .plus::after{ width:1px; height:9px; transition:transform .2s ease; }
+  .faq details[open] summary .plus::after{ transform:translate(-50%,-50%) rotate(90deg); opacity:0; }
+  .faq details[open] summary{ color:var(--accent-deep); }
+  .faq details[open] summary .plus{ border-color:var(--accent); }
+  .faq details[open] summary .plus::before, .faq details[open] summary .plus::after{ background:var(--accent); }
+  .faq .faq-a{
+    font-size:15px;
+    color:var(--descriptor);
+    max-width:64ch;
+    margin:16px 0 0;
+  }
+
+  /* ---------- contacto ---------- */
+  .form-panel{
+    display:grid;
+    grid-template-columns:0.85fr 1.15fr;
+    gap:clamp(30px,5vw,72px);
+  }
+  .form-panel h3{ font-size:clamp(24px,3vw,32px); letter-spacing:-0.01em; margin:0 0 16px; font-weight:600; }
+  .form-panel .lede{ margin:0; max-width:none; }
+  form{ display:flex; flex-direction:column; gap:18px; }
+  .field-row{ display:grid; grid-template-columns:1fr 1fr; gap:18px; }
+  label{
+    font-family:"IBM Plex Mono", monospace;
+    font-size:11px;
+    text-transform:uppercase;
+    letter-spacing:.06em;
+    color:var(--metadata);
+    display:block;
+    margin-bottom:8px;
+  }
+  input, select, textarea{
+    width:100%;
+    background:transparent;
+    border:none;
+    border-bottom:1px solid var(--filete);
+    padding:9px 2px;
+    font-family:"Archivo", sans-serif;
+    font-size:15px;
+    color:var(--ink);
+  }
+  input:focus, select:focus, textarea:focus{ outline:none; border-bottom-color:var(--accent); }
+  textarea{ resize:vertical; min-height:70px; }
+  .submit-row{ display:flex; align-items:center; gap:18px; margin-top:6px; }
+  #form-msg{ font-family:"IBM Plex Mono", monospace; font-size:12.5px; color:var(--volume); }
+
+  /* ================= FOOTER ================= */
+  footer{ background:var(--ink); color:var(--paper); padding:72px 0 0; }
+  .foot-grid{
+    display:grid;
+    grid-template-columns:1.2fr 0.8fr 0.8fr 1fr;
+    gap:40px;
+    padding-bottom:56px;
+    border-bottom:1px solid #33363A;
+  }
+  .foot-brand svg{ height:28px; margin-bottom:20px; }
+  .foot-brand p{ color:#B7B4AE; font-size:14px; max-width:34ch; margin:0; }
+  .foot-col h5{
+    font-family:"IBM Plex Mono", monospace;
+    font-size:11px; letter-spacing:.1em; text-transform:uppercase;
+    color:#8B8884; margin:0 0 18px;
+  }
+  .foot-col a{ display:block; color:#E4E2DD; text-decoration:none; font-size:14.5px; padding:6px 0; }
+  .foot-col a:hover{ color:var(--paper); text-decoration:underline; }
+  .foot-bottom{
+    display:flex; justify-content:space-between; align-items:center;
+    padding:22px 0; flex-wrap:wrap; gap:10px;
+  }
+  .foot-bottom span{ font-family:"IBM Plex Mono", monospace; font-size:11px; color:#6E716F; letter-spacing:.04em; }
+
+  /* ================= REVEAL ================= */
+  .reveal{ opacity:0; transform:translateY(14px); transition:opacity .6s ease, transform .6s ease; }
+  .reveal.in-view{ opacity:1; transform:translateY(0); }
+
+  @media (prefers-reduced-motion: reduce){
+    html{ scroll-behavior:auto; }
+    .reveal, .lvl{ opacity:1 !important; transform:none !important; transition:none !important; }
+  }
+
+  /* ================= RESPONSIVE ================= */
+  @media (max-width: 980px){
+    nav.links{ display:none; }
+    .nav-cta{ display:none; }
+    .burger{ display:flex; }
+    .hero-grid{ grid-template-columns:1fr; }
+    .hero-atmosphere svg{ width:80%; }
+    .hero-visual svg{ max-width:220px; }
+    .benefits{ grid-template-columns:1fr 1fr; }
+    .benefit:nth-child(2n){ border-right:none; }
+    .case{ grid-template-columns:1fr; }
+    .case-art{ border-right:none; border-bottom:1px solid var(--filete); }
+    .clients{ grid-template-columns:1fr; }
+    .plans{ grid-template-columns:1fr; }
+    .form-panel{ grid-template-columns:1fr; }
+    .foot-grid{ grid-template-columns:1fr 1fr; gap:32px; }
+    .foot-brand{ grid-column:1/-1; }
+  }
+  @media (max-width: 600px){
+    .benefits{ grid-template-columns:1fr; }
+    .benefit{ border-right:none !important; }
+    .services-grid{ grid-template-columns:1fr; }
+    .service-card{ border-right:none !important; }
+    .field-row{ grid-template-columns:1fr; }
+    .sheet-note{ text-align:left; }
+    .foot-grid{ grid-template-columns:1fr; }
+  }
+</style>
+<noscript><style>.reveal,.lvl{opacity:1 !important; transform:none !important;}</style></noscript>
+</head>
+<body>
+
+<header>
+  <div class="wrap nav">
+    <a href="#top" class="brand" aria-label="ARCHBIM Studio — inicio">
+      <svg aria-hidden="true" viewBox="0 0 470 80" xmlns="http://www.w3.org/2000/svg">
+        <g transform="translate(0,4) scale(0.72)">
+          <g fill="none" stroke="#16181A" stroke-width="6.5" stroke-linecap="square" stroke-linejoin="miter">
+            <polygon points="50,10 88,32 50,54 12,32" fill="#5A5D60" stroke="none"></polygon>
+            <polygon points="50,10 88,32 88,68 50,90 12,68 12,32"></polygon>
+            <line x1="50" y1="54" x2="50" y2="90"></line>
+            <line x1="50" y1="54" x2="12" y2="32"></line>
+            <line x1="50" y1="54" x2="88" y2="32"></line>
+          </g>
+        </g>
+        <text x="98" y="56.5" font-family="Archivo, sans-serif" font-size="46" letter-spacing="0.23" fill="#16181A"><tspan font-weight="700">ARCH</tspan><tspan font-weight="300">BIM</tspan></text>
+        <rect x="322" y="18.5" width="1" height="43" fill="#C6C2BA"></rect>
+        <text x="344" y="53" font-family="Archivo, sans-serif" font-size="36" font-weight="400" letter-spacing="-0.36" fill="#3A3D40">Studio</text>
+      </svg>
+    </a>
+    <nav class="links">
+      <div class="has-dropdown" id="servicesDropdown">
+        <button class="dropdown-btn" id="dropdownBtn" aria-expanded="false" aria-controls="dropdownPanel">
+          Servicios
+          <svg aria-hidden="true" viewBox="0 0 10 6" fill="none"><path d="M1 1L5 5L9 1" stroke="#3A3D40" stroke-width="1.4"/></svg>
+        </button>
+        <div class="dropdown-panel" id="dropdownPanel">
+          <a class="dropdown-item" href="#servicio-implementacion">
+            <span class="dtitle"><span class="bubble">B</span>Implementación BIM</span>
+            <span class="ddesc">Instalamos el flujo en tu estudio.</span>
+          </a>
+          <a class="dropdown-item" href="#servicio-consultoria">
+            <span class="dtitle"><span class="bubble">C</span>Consultoría BIM</span>
+            <span class="ddesc">Coordinación y BIM management.</span>
+          </a>
+          <a class="dropdown-item" href="#servicio-proyecto">
+            <span class="dtitle"><span class="bubble">D</span>Proyecto BIM</span>
+            <span class="ddesc">Modelado y documentación completa.</span>
+          </a>
+          <a class="dropdown-item" href="#servicio-capacitacion">
+            <span class="dtitle"><span class="bubble">E</span>Capacitación</span>
+            <span class="ddesc">Cursos online — próximamente.</span>
+          </a>
+          <div class="dropdown-foot"><a href="#servicios">Ver todos los servicios →</a></div>
+        </div>
+      </div>
+      <a href="#proyectos">Proyectos</a>
+      <a href="#clientes">Clientes</a>
+      <a href="#faq">Preguntas</a>
+      <a href="#contacto">Contacto</a>
+    </nav>
+    <a href="#contacto" class="nav-cta">Empezar un proyecto</a>
+    <button class="burger" id="burgerBtn" aria-label="Abrir menú" aria-expanded="false">
+      <span></span><span></span><span></span>
+    </button>
+  </div>
+  <div class="mobile-panel" id="mobilePanel">
+    <a href="#servicios">Servicios</a>
+    <a href="#servicio-implementacion" class="sub">— Implementación BIM</a>
+    <a href="#servicio-consultoria" class="sub">— Consultoría BIM</a>
+    <a href="#servicio-proyecto" class="sub">— Proyecto BIM</a>
+    <a href="#servicio-capacitacion" class="sub">— Capacitación</a>
+    <a href="#proyectos">Proyectos</a>
+    <a href="#clientes">Clientes</a>
+    <a href="#faq">Preguntas frecuentes</a>
+    <a href="#contacto">Contacto</a>
+    <a href="#contacto" class="nav-cta" style="margin-top:16px;text-align:center;">Empezar un proyecto</a>
+  </div>
+</header>
+
+<main id="top">
+
+  <!-- ================= HERO ================= -->
+  <section class="hero">
+    <div class="hero-panel">
+      <div class="hero-atmosphere" aria-hidden="true">
+        <svg aria-hidden="true" viewBox="0 0 200 200" xmlns="http://www.w3.org/2000/svg" fill="none" stroke="#FFFFFF" stroke-width="1.1" stroke-linecap="square" stroke-linejoin="miter">
+          <polygon points="100,20 176,64 100,108 24,64"></polygon>
+          <polygon points="100,20 176,64 176,152 100,196 24,152 24,64"></polygon>
+          <line x1="100" y1="108" x2="100" y2="196"></line><line x1="100" y1="108" x2="24" y2="64"></line><line x1="100" y1="108" x2="176" y2="64"></line>
+        </svg>
+      </div>
+
+      <div class="wrap">
+        <div class="hero-grid">
+          <div class="hero-copy">
+            <div class="hero-logo-tile">
+              <svg aria-hidden="true" viewBox="0 0 470 80" xmlns="http://www.w3.org/2000/svg">
+                <g transform="translate(0,4) scale(0.72)">
+                  <g fill="none" stroke="#16181A" stroke-width="6.5" stroke-linecap="square" stroke-linejoin="miter">
+                    <polygon points="50,10 88,32 50,54 12,32" fill="#5A5D60" stroke="none"></polygon>
+                    <polygon points="50,10 88,32 88,68 50,90 12,68 12,32"></polygon>
+                    <line x1="50" y1="54" x2="50" y2="90"></line>
+                    <line x1="50" y1="54" x2="12" y2="32"></line>
+                    <line x1="50" y1="54" x2="88" y2="32"></line>
+                  </g>
+                </g>
+                <text x="98" y="56.5" font-family="Archivo, sans-serif" font-size="46" letter-spacing="0.23" fill="#16181A"><tspan font-weight="700">ARCH</tspan><tspan font-weight="300">BIM</tspan></text>
+                <rect x="322" y="18.5" width="1" height="43" fill="#C6C2BA"></rect>
+                <text x="344" y="53" font-family="Archivo, sans-serif" font-size="36" font-weight="400" letter-spacing="-0.36" fill="#3A3D40">Studio</text>
+              </svg>
+            </div>
+            <p class="eyebrow"><span class="dot"></span>Estudio BIM — Buenos Aires, Argentina</p>
+            <h1 class="headline"><span class="w">Coordinar</span> <span class="l">antes de construir.</span></h1>
+            <p class="lede">ARCHBIM Studio implementa y opera flujos BIM para estudios de arquitectura e ingeniería: un modelo único, coordinado entre disciplinas, desde el anteproyecto hasta la documentación ejecutiva.</p>
+            <div class="cta-row">
+              <a href="#contacto" class="btn btn-primary">Implementar un proyecto BIM →</a>
+              <a href="#contacto" class="btn btn-outline">Pedir una consultoría</a>
+            </div>
+            <p class="compat-row">Compatible con: <b>ArchiCAD</b> · <b>IFC</b> · <b>Revit</b> (vía IFC)</p>
+          </div>
+
+          <div class="hero-visual" id="heroVisual">
+            <svg aria-hidden="true" viewBox="0 0 240 300" xmlns="http://www.w3.org/2000/svg">
+              <line class="dim-line" x1="8" y1="15" x2="8" y2="280"></line>
+              <line class="dim-line" x1="4" y1="15" x2="12" y2="15"></line>
+              <line class="dim-line" x1="4" y1="82" x2="12" y2="82"></line>
+              <line class="dim-line" x1="4" y1="149" x2="12" y2="149"></line>
+              <line class="dim-line" x1="4" y1="216" x2="12" y2="216"></line>
+              <line class="dim-line" x1="4" y1="280" x2="12" y2="280"></line>
+
+              <g transform="translate(40,204)">
+              <g class="lvl n0">
+                <g fill="none" stroke="rgba(255,255,255,0.85)" stroke-width="3.6" stroke-linecap="square" stroke-linejoin="miter">
+                  <polygon points="50,10 88,32 50,54 12,32" fill="#F3F1ED" stroke="none"></polygon>
+                  <polygon points="50,10 88,32 88,68 50,90 12,68 12,32"></polygon>
+                  <line x1="50" y1="54" x2="50" y2="90"></line><line x1="50" y1="54" x2="12" y2="32"></line><line x1="50" y1="54" x2="88" y2="32"></line>
+                </g>
+                <text x="100" y="48" class="node-label">N ±0.00 — sitio</text>
+              </g>
+              </g>
+
+              <g transform="translate(40,138)">
+              <g class="lvl n1">
+                <g fill="none" stroke="rgba(255,255,255,0.85)" stroke-width="3.6" stroke-linecap="square" stroke-linejoin="miter">
+                  <polygon points="50,10 88,32 50,54 12,32" fill="#8FD0D6" stroke="none"></polygon>
+                  <polygon points="50,10 88,32 88,68 50,90 12,68 12,32"></polygon>
+                  <line x1="50" y1="54" x2="50" y2="90"></line><line x1="50" y1="54" x2="12" y2="32"></line><line x1="50" y1="54" x2="88" y2="32"></line>
+                </g>
+                <text x="100" y="48" class="node-label">N +3.50 — estructura</text>
+              </g>
+              </g>
+
+              <g transform="translate(40,72)">
+              <g class="lvl n2">
+                <g fill="none" stroke="rgba(255,255,255,0.85)" stroke-width="3.6" stroke-linecap="square" stroke-linejoin="miter">
+                  <polygon points="50,10 88,32 50,54 12,32" fill="#1C93A0" stroke="none"></polygon>
+                  <polygon points="50,10 88,32 88,68 50,90 12,68 12,32"></polygon>
+                  <line x1="50" y1="54" x2="50" y2="90"></line><line x1="50" y1="54" x2="12" y2="32"></line><line x1="50" y1="54" x2="88" y2="32"></line>
+                </g>
+                <text x="100" y="48" class="node-label">N +7.00 — envolvente</text>
+              </g>
+              </g>
+
+              <g transform="translate(40,6)">
+              <g class="lvl n3">
+                <g fill="none" stroke="rgba(255,255,255,0.95)" stroke-width="3.6" stroke-linecap="square" stroke-linejoin="miter">
+                  <polygon points="50,10 88,32 50,54 12,32" fill="#4FE6DE" stroke="none"></polygon>
+                  <polygon points="50,10 88,32 88,68 50,90 12,68 12,32"></polygon>
+                  <line x1="50" y1="54" x2="50" y2="90"></line><line x1="50" y1="54" x2="12" y2="32"></line><line x1="50" y1="54" x2="88" y2="32"></line>
+                </g>
+                <text x="100" y="48" class="node-label">N +10.50 — modelo</text>
+              </g>
+              </g>
+            </svg>
+            <p class="hero-caption mono">Modelo BIM coordinado — ARCHBIM Studio</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ================= SERVICIOS (grid compacto) ================= -->
+  <section class="sheet" id="servicios">
+    <div class="wrap">
+      <div class="sheet-head reveal">
+        <div>
+          <p class="sheet-label">L-00 · Servicios</p>
+          <h2>Cuatro formas de entrar en BIM, según de dónde partas.</h2>
+        </div>
+        <p class="sheet-note">Del primer estándar de modelado a la documentación lista para licitar. Elegís el alcance, nosotros ponemos el flujo.</p>
+      </div>
+
+      <div class="services-grid reveal">
+        <div class="service-card" id="servicio-implementacion">
+          <div class="top-row"><div class="bubble">B</div><h3>Implementación BIM</h3></div>
+          <p>Instalamos el flujo BIM en tu estudio: estándares, plantillas y nomenclatura de modelado, para que el pasaje de CAD a BIM no dependa de una sola persona.</p>
+          <a href="#contacto" class="alt-link" data-service="Implementación de proyecto BIM">Empezar una implementación →</a>
+        </div>
+
+        <div class="service-card" id="servicio-consultoria">
+          <div class="top-row"><div class="bubble">C</div><h3>Consultoría BIM</h3></div>
+          <p>Auditamos modelos, coordinamos disciplinas y resolvemos interferencias antes de que lleguen a obra. Trabajamos como tu BIM Manager externo, proyecto por proyecto.</p>
+          <a href="#contacto" class="alt-link" data-service="Consultoría BIM">Pedir una consultoría →</a>
+        </div>
+
+        <div class="service-card" id="servicio-proyecto">
+          <div class="top-row"><div class="bubble">D</div><h3>Proyecto BIM</h3></div>
+          <p>Modelamos el proyecto completo en un archivo coordinado, con dos entregas independientes.</p>
+          <div class="tag-row">
+            <span class="tag">Doc. Anteproyecto</span>
+            <span class="tag">Doc. Ejecutiva</span>
+          </div>
+          <a href="#contacto" class="alt-link" data-service="Proyecto BIM">Cotizar un proyecto →</a>
+        </div>
+
+        <div class="service-card" id="servicio-capacitacion">
+          <div class="top-row"><div class="bubble">E</div><h3>Capacitación en línea</h3><span class="badge">Próximamente</span></div>
+          <p>Cursos cortos de ArchiCAD y flujo BIM, pensados para estudios que quieren formar a su propio equipo.</p>
+          <a href="#contacto" class="alt-link" data-service="Capacitación en línea">Sumarme a la lista →</a>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ================= POR QUÉ BIM ================= -->
+  <section class="sheet" id="por-que-bim">
+    <div class="wrap">
+      <div class="sheet-head reveal">
+        <div>
+          <p class="sheet-label">L-01 · Por qué BIM</p>
+          <h2>Un modelo. Cero reprocesos.</h2>
+        </div>
+        <p class="sheet-note">Lo que cambia en el día a día del estudio cuando arquitectura, estructura e instalaciones comparten un mismo archivo.</p>
+      </div>
+    </div>
+    <div class="wrap" style="padding:0;">
+      <div class="benefits reveal">
+        <div class="benefit">
+          <div class="bubble mono">1</div>
+          <h4>Menos horas de dibujo</h4>
+          <p>El modelo genera planos, cortes y vistas automáticamente: se corrige una vez y se actualiza en todos lados.</p>
+        </div>
+        <div class="benefit">
+          <div class="bubble mono">2</div>
+          <h4>Interferencias antes de obra</h4>
+          <p>Cruzamos estructura, instalaciones y arquitectura en el mismo archivo para resolver choques en pantalla, no en el sitio.</p>
+        </div>
+        <div class="benefit">
+          <div class="bubble mono">3</div>
+          <h4>Cómputos confiables</h4>
+          <p>Cantidades y superficies salen directo del modelo, no de una planilla aparte que alguien olvida actualizar.</p>
+        </div>
+        <div class="benefit">
+          <div class="bubble mono">4</div>
+          <h4>Un archivo, todo el equipo</h4>
+          <p>Arquitectura, ingeniería y dirección de obra trabajan sobre la misma información, siempre actualizada.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ================= PROYECTOS ================= -->
+  <section class="sheet" id="proyectos">
+    <div class="wrap">
+      <div class="sheet-head reveal">
+        <div>
+          <p class="sheet-label">L-02 · Proyectos</p>
+          <h2>De anteproyecto a obra, en un mismo modelo.</h2>
+        </div>
+        <p class="sheet-note">Ejemplo de proyecto documentado íntegramente en BIM por ARCHBIM Studio.</p>
+      </div>
+
+      <div class="case reveal">
+        <div class="case-art">
+          <svg aria-hidden="true" viewBox="0 0 200 170" xmlns="http://www.w3.org/2000/svg">
+            <g fill="none" stroke="#16181A" stroke-width="3.4" stroke-linecap="square" stroke-linejoin="miter">
+              <polygon points="100,14 176,54 100,94 24,54" fill="#C6C2BA" stroke="#16181A"></polygon>
+              <polygon points="24,54 24,132 100,172 100,94" fill="#F3F1ED"></polygon>
+              <polygon points="176,54 176,132 100,172 100,94" fill="#5A5D60"></polygon>
+              <line x1="100" y1="14" x2="100" y2="94"></line>
+              <line x1="24" y1="54" x2="100" y2="94"></line>
+              <line x1="176" y1="54" x2="100" y2="94"></line>
+            </g>
+            <g stroke="#8B8884" stroke-width="1.4">
+              <line x1="45" y1="70" x2="45" y2="118"></line>
+              <line x1="66" y1="80" x2="66" y2="128"></line>
+              <line x1="87" y1="90" x2="87" y2="138"></line>
+              <line x1="113" y1="90" x2="113" y2="138"></line>
+              <line x1="134" y1="80" x2="134" y2="128"></line>
+              <line x1="155" y1="70" x2="155" y2="118"></line>
+            </g>
+          </svg>
+        </div>
+        <div class="case-body">
+          <div class="tags">
+            <span class="tag">Tandil, Pcia. Buenos Aires</span>
+            <span class="tag">Uso comercial</span>
+            <span class="tag">Escala grande</span>
+          </div>
+          <h3>Shopping Tandil</h3>
+          <p class="case-loc mono">ARCHBIM Studio — Documentado en BIM</p>
+          <p class="desc">Centro comercial modelado íntegramente en BIM: coordinación de estructura, instalaciones y arquitectura en un único archivo, desde el anteproyecto hasta la documentación ejecutiva para obra.</p>
+          <div class="case-meta">
+            <div><div class="k">Servicio</div>Proyecto BIM</div>
+            <div><div class="k">Entrega</div>Anteproyecto + Ejecutiva</div>
+            <div><div class="k">Estado</div>Documentado</div>
+          </div>
+          <div class="case-cta"><a href="#contacto" class="alt-link">Consultar sobre este proyecto →</a></div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ================= CLIENTES ================= -->
+  <section class="sheet" id="clientes">
+    <div class="wrap">
+      <div class="sheet-head reveal">
+        <div>
+          <p class="sheet-label">L-03 · Clientes</p>
+          <h2>Estudios de arquitectura e ingeniería que ya trabajan en BIM con nosotros.</h2>
+        </div>
+      </div>
+
+      <p class="sheet-note reveal" style="text-align:left; max-width:60ch; margin:-36px 0 40px;">Todavía no tenemos los isotipos de cada estudio — las marcas de abajo son iniciales provisorias. Si nos pasás sus logos, los reemplazamos.</p>
+
+      <div class="clients reveal">
+        <div class="client"><div class="client-id"><span class="mark mark-lg">BMA</span><span class="name">BMA Arquitectos Asociados</span></div></div>
+        <div class="client"><div class="client-id"><span class="mark mark-lg">DP</span><span class="name">DIPA Arquitectos</span></div></div>
+        <div class="client"><div class="client-id"><span class="mark mark-lg">RDR</span><span class="name">RDR Arquitectos</span></div></div>
+        <div class="client"><div class="client-id"><span class="mark mark-lg">EC</span><span class="name">Estudio Clusellas</span></div><span class="loc">Clusellas + Ades</span></div>
+        <div class="client"><div class="client-id"><span class="mark mark-lg">MDS</span><span class="name">MDS Oficina de Arquitectura</span></div></div>
+        <div class="client"><div class="client-id"><span class="mark mark-lg">MK</span><span class="name">Metrika Ltda.</span></div><span class="loc">Miami, FL, USA</span></div>
+        <div class="client"><div class="client-id"><span class="mark mark-lg">LI</span><span class="name">Lamas Ingeniería</span></div></div>
+        <div class="client"><div class="client-id"><span class="mark mark-lg">VM</span><span class="name">Vialmun Ltda. SA</span></div></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ================= PLANES / CÓMO EMPEZAR ================= -->
+  <section class="sheet" id="planes">
+    <div class="wrap">
+      <div class="sheet-head reveal">
+        <div>
+          <p class="sheet-label">L-04 · Cómo empezar</p>
+          <h2>Elegí el alcance. Nosotros ponemos el flujo.</h2>
+        </div>
+        <p class="sheet-note">Contanos en qué punto está tu estudio y armamos el alcance juntos.</p>
+      </div>
+
+      <div class="plans reveal">
+        <div class="plan-card featured">
+          <span class="plan-badge">Más elegido</span>
+          <span class="num mono">01</span>
+          <h4>Implementar un proyecto BIM</h4>
+          <p>Modelado y documentación completa de tu próximo proyecto, de anteproyecto a obra.</p>
+          <div class="plan-list">
+            <div>Modelo coordinado entre disciplinas</div>
+            <div>Documentación de Anteproyecto</div>
+            <div>Documentación Ejecutiva</div>
+          </div>
+          <a href="#contacto" class="btn btn-outline" data-service="Implementación de proyecto BIM">Escribinos por esto</a>
+        </div>
+        <div class="plan-card">
+          <span class="num mono">02</span>
+          <h4>Consultoría BIM</h4>
+          <p>Coordinación, auditoría de modelo o BIM management puntual para un proyecto en curso.</p>
+          <div class="plan-list">
+            <div>Auditoría de modelo existente</div>
+            <div>Detección de interferencias</div>
+            <div>BIM Manager externo</div>
+          </div>
+          <a href="#contacto" class="btn btn-outline" data-service="Consultoría BIM">Escribinos por esto</a>
+        </div>
+        <div class="plan-card">
+          <span class="num mono">03</span>
+          <h4>Capacitación en línea <span class="badge">Próximamente</span></h4>
+          <p>Cursos cortos de ArchiCAD y flujo BIM para formar al equipo de tu estudio.</p>
+          <div class="plan-list">
+            <div>Fundamentos de ArchiCAD</div>
+            <div>Estándares y plantillas</div>
+            <div>Flujo de documentación BIM</div>
+          </div>
+          <a href="#contacto" class="btn btn-outline" data-service="Capacitación en línea">Sumarme a la lista</a>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ================= FAQ ================= -->
+  <section class="sheet" id="faq">
+    <div class="wrap">
+      <div class="sheet-head reveal">
+        <div>
+          <p class="sheet-label">L-05 · Preguntas frecuentes</p>
+          <h2>¿Tenés más preguntas?</h2>
+        </div>
+      </div>
+
+      <div class="faq reveal">
+        <details>
+          <summary>¿Necesito tener ArchiCAD para trabajar con ustedes?<span class="plus"></span></summary>
+          <p class="faq-a">No. Nosotros modelamos en ArchiCAD, pero coordinamos con estudios que trabajan en Revit u otro software BIM mediante formatos abiertos (IFC).</p>
+        </details>
+        <details>
+          <summary>¿Cuánto tarda una implementación BIM?<span class="plus"></span></summary>
+          <p class="faq-a">Depende del tamaño del estudio y de cuántas plantillas y estándares ya tengan armados. En general, entre 4 y 8 semanas para dejar el flujo funcionando sobre un proyecto piloto.</p>
+        </details>
+        <details>
+          <summary>¿Trabajan proyectos completos o solo consultoría puntual?<span class="plus"></span></summary>
+          <p class="faq-a">Las dos cosas. Podemos modelar tu proyecto de punta a punta, o sumarnos como BIM Manager externo en un proyecto que ya está en curso.</p>
+        </details>
+        <details>
+          <summary>¿Qué incluye la documentación ejecutiva?<span class="plus"></span></summary>
+          <p class="faq-a">Planos técnicos, detalles constructivos y cómputos, listos para licitar y construir — generados desde el mismo modelo que la documentación de anteproyecto.</p>
+        </details>
+        <details>
+          <summary>¿Cuándo abre la capacitación en línea?<span class="plus"></span></summary>
+          <p class="faq-a">Está en desarrollo. Dejanos tu contacto en el formulario y te avisamos apenas esté disponible.</p>
+        </details>
+      </div>
+    </div>
+  </section>
+
+  <!-- ================= CONTACTO ================= -->
+  <section class="sheet" id="contacto">
+    <div class="wrap">
+      <div class="sheet-head reveal">
+        <div>
+          <p class="sheet-label">L-06 · Contacto</p>
+          <h2>Contanos sobre tu proyecto.</h2>
+        </div>
+        <p class="sheet-note">Respondemos en uno o dos días hábiles.</p>
+      </div>
+
+      <div class="form-panel reveal" id="contact-form">
+        <div>
+          <p class="sheet-label" style="margin-bottom:16px;">Consulta directa</p>
+          <h3>Elegí cómo empezar</h3>
+          <p class="lede">Si ya tenés planos o un modelo en curso, mencionalo — nos ayuda a dimensionar el alcance antes de responderte.</p>
+        </div>
+        <form id="archbimForm">
+          <div class="field-row">
+            <div class="field">
+              <label for="f-name">Nombre</label>
+              <input id="f-name" type="text" required>
+            </div>
+            <div class="field">
+              <label for="f-studio">Estudio / empresa</label>
+              <input id="f-studio" type="text">
+            </div>
+          </div>
+          <div class="field-row">
+            <div class="field">
+              <label for="f-email">Email</label>
+              <input id="f-email" type="email" required>
+            </div>
+            <div class="field">
+              <label for="f-service">Servicio de interés</label>
+              <select id="f-service">
+                <option>Implementación de proyecto BIM</option>
+                <option>Consultoría BIM</option>
+                <option>Proyecto BIM</option>
+                <option>Capacitación en línea</option>
+              </select>
+            </div>
+          </div>
+          <div class="field">
+            <label for="f-msg">Mensaje</label>
+            <textarea id="f-msg" rows="3"></textarea>
+          </div>
+          <div class="submit-row">
+            <button type="submit" class="btn btn-primary">Enviar consulta →</button>
+            <span id="form-msg"></span>
+          </div>
+        </form>
+      </div>
+    </div>
+  </section>
+
+</main>
+
+<footer>
+  <div class="wrap">
+    <div class="foot-grid">
+      <div class="foot-brand">
+        <svg aria-hidden="true" viewBox="0 0 470 80" xmlns="http://www.w3.org/2000/svg">
+          <g transform="translate(0,4) scale(0.72)">
+            <g fill="none" stroke="#F3F1ED" stroke-width="6.5" stroke-linecap="square" stroke-linejoin="miter">
+              <polygon points="50,10 88,32 50,54 12,32" fill="#8B8884" stroke="none"></polygon>
+              <polygon points="50,10 88,32 88,68 50,90 12,68 12,32"></polygon>
+              <line x1="50" y1="54" x2="50" y2="90"></line>
+              <line x1="50" y1="54" x2="12" y2="32"></line>
+              <line x1="50" y1="54" x2="88" y2="32"></line>
+            </g>
+          </g>
+          <text x="98" y="56.5" font-family="Archivo, sans-serif" font-size="46" letter-spacing="0.23" fill="#F3F1ED"><tspan font-weight="700">ARCH</tspan><tspan font-weight="300">BIM</tspan></text>
+          <rect x="322" y="18.5" width="1" height="43" fill="#4A4D50"></rect>
+          <text x="344" y="53" font-family="Archivo, sans-serif" font-size="36" font-weight="400" letter-spacing="-0.36" fill="#C9C6C0">Studio</text>
+        </svg>
+        <p>Implementación y consultoría BIM para estudios de arquitectura e ingeniería. Un modelo, coordinado, de principio a fin.</p>
+      </div>
+      <div class="foot-col">
+        <h5>Servicios</h5>
+        <a href="#servicio-implementacion">Implementación BIM</a>
+        <a href="#servicio-consultoria">Consultoría BIM</a>
+        <a href="#servicio-proyecto">Proyecto BIM</a>
+        <a href="#servicio-capacitacion">Capacitación</a>
+      </div>
+      <div class="foot-col">
+        <h5>Mapa del sitio</h5>
+        <a href="#top">Home</a>
+        <a href="#proyectos">Proyectos</a>
+        <a href="#clientes">Clientes</a>
+        <a href="#faq">Preguntas</a>
+      </div>
+      <div class="foot-col">
+        <h5>Contacto</h5>
+        <a href="#contact-form">Escribinos →</a>
+        <span style="display:block;color:#8B8884;font-size:14.5px;padding:6px 0;">Buenos Aires, Argentina</span>
+      </div>
+    </div>
+    <div class="foot-bottom">
+      <span>© 2026 ARCHBIM Studio</span>
+      <span>Sistema de marca v.3b — agosto 2026</span>
+    </div>
+  </div>
+</footer>
+
+<script>
+  // mobile nav
+  const burger = document.getElementById('burgerBtn');
+  burger.addEventListener('click', () => {
+    const open = document.body.classList.toggle('nav-open');
+    burger.setAttribute('aria-expanded', open ? 'true' : 'false');
+  });
+  document.querySelectorAll('.mobile-panel a').forEach(a=>{
+    a.addEventListener('click', ()=> document.body.classList.remove('nav-open'));
+  });
+
+  // desktop services dropdown (click-toggle, accessible; CSS handles hover as enhancement)
+  const ddWrap = document.getElementById('servicesDropdown');
+  const ddBtn = document.getElementById('dropdownBtn');
+  ddBtn.addEventListener('click', (e)=>{
+    e.stopPropagation();
+    const open = ddWrap.classList.toggle('open');
+    ddBtn.setAttribute('aria-expanded', open ? 'true' : 'false');
+  });
+  document.addEventListener('click', (e)=>{
+    if(!ddWrap.contains(e.target)){ ddWrap.classList.remove('open'); ddBtn.setAttribute('aria-expanded','false'); }
+  });
+  document.addEventListener('keydown', (e)=>{
+    if(e.key === 'Escape'){ ddWrap.classList.remove('open'); ddBtn.setAttribute('aria-expanded','false'); }
+  });
+  ddWrap.querySelectorAll('.dropdown-item, .dropdown-foot a').forEach(a=>{
+    a.addEventListener('click', ()=>{ ddWrap.classList.remove('open'); ddBtn.setAttribute('aria-expanded','false'); });
+  });
+
+  // scroll reveal
+  const revealEls = document.querySelectorAll('.reveal');
+  const heroVisual = document.getElementById('heroVisual');
+  const io = new IntersectionObserver((entries)=>{
+    entries.forEach(entry=>{
+      if(entry.isIntersecting){
+        entry.target.classList.add('in-view');
+        io.unobserve(entry.target);
+      }
+    });
+  }, {threshold:0.12});
+  revealEls.forEach(el=>io.observe(el));
+  // safety net: if something never intersects, reveal anyway
+  setTimeout(()=>{ revealEls.forEach(el=>el.classList.add('in-view')); heroVisual.classList.add('in-view'); }, 2500);
+
+  // hero visual reveals shortly after load regardless of scroll (it's above the fold)
+  requestAnimationFrame(()=> setTimeout(()=> heroVisual.classList.add('in-view'), 150));
+
+  // contact form: prefill service from links across the page, fake submit
+  document.querySelectorAll('[data-service]').forEach(link=>{
+    link.addEventListener('click', ()=>{
+      const svc = link.getAttribute('data-service');
+      const sel = document.getElementById('f-service');
+      for(const opt of sel.options){ if(opt.value === svc){ sel.value = svc; break; } }
+    });
+  });
+
+  const form = document.getElementById('archbimForm');
+  const msg = document.getElementById('form-msg');
+  form.addEventListener('submit', (e)=>{
+    e.preventDefault();
+    msg.textContent = 'Gracias — te respondemos por email a la brevedad.';
+    form.reset();
+  });
+</script>
+
+</body>
+</html>

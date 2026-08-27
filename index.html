@@ -295,16 +295,6 @@
     gap:clamp(28px,4vw,56px);
     align-items:center;
   }
-  .hero-logo-tile{
-    background:var(--white);
-    display:inline-flex;
-    align-items:center;
-    padding:12px 18px;
-    border-radius:12px;
-    margin-bottom:30px;
-    width:fit-content;
-  }
-  .hero-logo-tile svg{ height:24px; width:auto; }
   .eyebrow{
     font-family:"IBM Plex Mono", monospace;
     font-size:13px;
@@ -563,6 +553,60 @@
   .case-meta .k{ font-family:"IBM Plex Mono", monospace; color:var(--metadata); font-size:11px; text-transform:uppercase; letter-spacing:.08em; margin-bottom:4px; }
   .case-cta{ text-align:right; }
 
+  /* ---------- nosotros ---------- */
+  .about-panel{
+    display:grid;
+    grid-template-columns:0.9fr 1.1fr;
+    gap:0;
+    border:1px solid var(--filete);
+  }
+  .about-art{
+    background:var(--white);
+    padding:clamp(28px,4vw,50px);
+    display:flex;
+    flex-direction:column;
+    align-items:center;
+    justify-content:center;
+    gap:18px;
+    border-right:1px solid var(--filete);
+    text-align:center;
+  }
+  .about-mark{
+    width:104px;height:104px;
+    border-radius:50%;
+    border:1.5px solid var(--accent);
+    background:var(--accent-tint);
+    color:var(--accent-deep);
+    display:flex;align-items:center;justify-content:center;
+    font-size:32px;
+    letter-spacing:0;
+  }
+  .about-role{
+    font-family:"IBM Plex Mono", monospace;
+    font-size:12px;
+    letter-spacing:.05em;
+    text-transform:uppercase;
+    color:var(--metadata);
+  }
+  .about-body{
+    padding:clamp(28px,4vw,50px);
+    display:flex;
+    flex-direction:column;
+    justify-content:center;
+  }
+  .about-body h3{
+    font-size:clamp(24px,3vw,32px);
+    letter-spacing:-0.01em;
+    margin:0 0 4px;
+    font-weight:600;
+  }
+  .about-title{ font-family:"IBM Plex Mono", monospace; font-size:13px; color:var(--accent-deep); margin:0 0 20px; }
+  .about-body p.desc{ color:var(--descriptor); font-size:15px; max-width:58ch; margin:0 0 16px; }
+  .about-meta{ display:flex; gap:32px; flex-wrap:wrap; margin:10px 0 26px; }
+  .about-meta div{ font-size:13px; }
+  .about-meta .k{ font-family:"IBM Plex Mono", monospace; color:var(--metadata); font-size:11px; text-transform:uppercase; letter-spacing:.08em; margin-bottom:4px; }
+  .about-cta{ text-align:right; }
+
   /* ---------- clientes ---------- */
   .clients{
     display:grid;
@@ -750,6 +794,8 @@
     .benefit:nth-child(2n){ border-right:none; }
     .case{ grid-template-columns:1fr; }
     .case-art{ border-right:none; border-bottom:1px solid var(--filete); }
+    .about-panel{ grid-template-columns:1fr; }
+    .about-art{ border-right:none; border-bottom:1px solid var(--filete); }
     .clients{ grid-template-columns:1fr; }
     .plans{ grid-template-columns:1fr; }
     .form-panel{ grid-template-columns:1fr; }
@@ -816,6 +862,7 @@
       </div>
       <a href="#proyectos">Proyectos</a>
       <a href="#clientes">Clientes</a>
+      <a href="#nosotros">Nosotros</a>
       <a href="#faq">Preguntas</a>
       <a href="#contacto">Contacto</a>
     </nav>
@@ -832,6 +879,7 @@
     <a href="#servicio-capacitacion" class="sub">— Capacitación</a>
     <a href="#proyectos">Proyectos</a>
     <a href="#clientes">Clientes</a>
+    <a href="#nosotros">Nosotros</a>
     <a href="#faq">Preguntas frecuentes</a>
     <a href="#contacto">Contacto</a>
     <a href="#contacto" class="nav-cta" style="margin-top:16px;text-align:center;">Empezar un proyecto</a>
@@ -854,22 +902,6 @@
       <div class="wrap">
         <div class="hero-grid">
           <div class="hero-copy">
-            <div class="hero-logo-tile">
-              <svg aria-hidden="true" viewBox="0 0 470 80" xmlns="http://www.w3.org/2000/svg">
-                <g transform="translate(0,4) scale(0.72)">
-                  <g fill="none" stroke="#16181A" stroke-width="6.5" stroke-linecap="square" stroke-linejoin="miter">
-                    <polygon points="50,10 88,32 50,54 12,32" fill="#5A5D60" stroke="none"></polygon>
-                    <polygon points="50,10 88,32 88,68 50,90 12,68 12,32"></polygon>
-                    <line x1="50" y1="54" x2="50" y2="90"></line>
-                    <line x1="50" y1="54" x2="12" y2="32"></line>
-                    <line x1="50" y1="54" x2="88" y2="32"></line>
-                  </g>
-                </g>
-                <text x="98" y="56.5" font-family="Archivo, sans-serif" font-size="46" letter-spacing="0.23" fill="#16181A"><tspan font-weight="700">ARCH</tspan><tspan font-weight="300">BIM</tspan></text>
-                <rect x="322" y="18.5" width="1" height="43" fill="#C6C2BA"></rect>
-                <text x="344" y="53" font-family="Archivo, sans-serif" font-size="36" font-weight="400" letter-spacing="-0.36" fill="#3A3D40">Studio</text>
-              </svg>
-            </div>
             <p class="eyebrow"><span class="dot"></span>Estudio BIM — Buenos Aires, Argentina</p>
             <h1 class="headline"><span class="w">Coordinar</span> <span class="l">antes de construir.</span></h1>
             <p class="lede">ARCHBIM Studio implementa y opera flujos BIM para estudios de arquitectura e ingeniería: un modelo único, coordinado entre disciplinas, desde el anteproyecto hasta la documentación ejecutiva.</p>
@@ -1097,12 +1129,44 @@
     </div>
   </section>
 
+  <!-- ================= NOSOTROS ================= -->
+  <section class="sheet" id="nosotros">
+    <div class="wrap">
+      <div class="sheet-head reveal">
+        <div>
+          <p class="sheet-label">L-04 · Nosotros</p>
+          <h2>Coordinación con nombre y apellido.</h2>
+        </div>
+        <p class="sheet-note">Un solo interlocutor técnico, del anteproyecto a la documentación ejecutiva.</p>
+      </div>
+
+      <div class="about-panel reveal">
+        <div class="about-art">
+          <div class="about-mark mono">ND</div>
+          <p class="about-role">BIM Manager — Coordinador</p>
+        </div>
+        <div class="about-body">
+          <h3>Norberto Dorantes</h3>
+          <p class="about-title mono">Coordinador de ARCHBIM Studio</p>
+          <p class="desc">Norberto coordina cada proyecto de punta a punta: define el estándar de modelado, audita el archivo y es el interlocutor único entre tu estudio y el modelo. Formado como GRAPHISOFT Certified Archicad BIM Manager, con foco en coordinación de disciplinas y documentación para obra.</p>
+          <p class="desc">Un solo responsable de la coordinación evita lo que más atrasa un proyecto BIM: que nadie sepa quién resuelve una interferencia. En ARCHBIM, esa persona tiene nombre y apellido.</p>
+          <div class="about-meta">
+            <div><div class="k">Rol</div>BIM Manager & Coordinador</div>
+            <div><div class="k">Formación</div>GRAPHISOFT Certified Archicad BIM Manager</div>
+            <div><div class="k">Sede</div>Buenos Aires, Argentina</div>
+          </div>
+          <div class="about-cta"><a href="#contacto" class="alt-link">Coordinar tu proyecto con Norberto →</a></div>
+        </div>
+      </div>
+    </div>
+  </section>
+
   <!-- ================= PLANES / CÓMO EMPEZAR ================= -->
   <section class="sheet" id="planes">
     <div class="wrap">
       <div class="sheet-head reveal">
         <div>
-          <p class="sheet-label">L-04 · Cómo empezar</p>
+          <p class="sheet-label">L-05 · Cómo empezar</p>
           <h2>Elegí el alcance. Nosotros ponemos el flujo.</h2>
         </div>
         <p class="sheet-note">Contanos en qué punto está tu estudio y armamos el alcance juntos.</p>
@@ -1152,7 +1216,7 @@
     <div class="wrap">
       <div class="sheet-head reveal">
         <div>
-          <p class="sheet-label">L-05 · Preguntas frecuentes</p>
+          <p class="sheet-label">L-06 · Preguntas frecuentes</p>
           <h2>¿Tenés más preguntas?</h2>
         </div>
       </div>
@@ -1187,7 +1251,7 @@
     <div class="wrap">
       <div class="sheet-head reveal">
         <div>
-          <p class="sheet-label">L-06 · Contacto</p>
+          <p class="sheet-label">L-07 · Contacto</p>
           <h2>Contanos sobre tu proyecto.</h2>
         </div>
         <p class="sheet-note">Respondemos en uno o dos días hábiles.</p>
@@ -1272,6 +1336,7 @@
         <a href="#top">Home</a>
         <a href="#proyectos">Proyectos</a>
         <a href="#clientes">Clientes</a>
+        <a href="#nosotros">Nosotros</a>
         <a href="#faq">Preguntas</a>
       </div>
       <div class="foot-col">

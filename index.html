@@ -280,13 +280,16 @@
     pointer-events:none;
     background-image:radial-gradient(rgba(255,255,255,0.055) 1px, transparent 1px);
     background-size:24px 24px;
+    animation:gridDrift 60s linear infinite;
   }
-  .hero-atmosphere svg{
-    position:absolute;
-    right:-20%; bottom:-30%;
-    width:56%; max-width:480px; height:auto;
-    opacity:0.14;
-  }
+  .atmo-hex{ position:absolute; }
+  .hex-a{ right:-20%; bottom:-30%; width:56%; max-width:480px; height:auto; opacity:0.14; animation:floatA 22s ease-in-out infinite; }
+  .hex-b{ left:-10%; top:4%; width:30%; max-width:230px; height:auto; opacity:0.09; animation:floatB 28s ease-in-out infinite; }
+  .hex-c{ right:6%; top:-8%; width:19%; max-width:150px; height:auto; opacity:0.11; animation:floatC 34s ease-in-out infinite; }
+  @keyframes gridDrift{ from{ background-position:0 0; } to{ background-position:240px 240px; } }
+  @keyframes floatA{ 0%,100%{ transform:translate(0,0) rotate(0deg); } 50%{ transform:translate(-14px,10px) rotate(3deg); } }
+  @keyframes floatB{ 0%,100%{ transform:translate(0,0) rotate(0deg); } 50%{ transform:translate(11px,-13px) rotate(-4deg); } }
+  @keyframes floatC{ 0%,100%{ transform:translate(0,0) rotate(0deg); } 50%{ transform:translate(-9px,9px) rotate(4deg); } }
   .hero-grid{
     position:relative;
     z-index:1;
@@ -396,7 +399,6 @@
     letter-spacing:.03em;
   }
   .node-label{ font-family:"IBM Plex Mono", monospace; font-size:10.5px; fill:rgba(255,255,255,0.78); }
-  .dim-line{ stroke:rgba(255,255,255,0.18); stroke-width:1; }
   .lvl{ opacity:0; transform:translateY(16px); transition:opacity .7s ease, transform .7s ease; }
   .hero-visual.in-view .lvl{ opacity:1; transform:translateY(0); }
   .hero-visual.in-view .n0{ transition-delay:.05s; }
@@ -501,6 +503,15 @@
   .benefit .bubble{ margin-bottom:22px; }
   .benefit h4{ font-size:16.5px; font-weight:600; margin:0 0 10px; }
   .benefit p{ font-size:13.5px; color:var(--descriptor); margin:0; }
+
+  /* ---------- cómo bim potencia tus proyectos ---------- */
+  .potencia-band{ background:var(--accent-tint); }
+  .potencia-head{ max-width:58ch; margin-bottom:48px; }
+  .potencia-head h2{ font-size:clamp(28px,3.6vw,44px); line-height:1.08; letter-spacing:-0.01em; margin:0 0 14px; font-weight:500; }
+  .potencia-head p{ margin:0; font-size:clamp(15.5px,1.4vw,17.5px); color:var(--descriptor); max-width:56ch; }
+  .potencia-grid{ display:grid; grid-template-columns:repeat(4,1fr); gap:28px; }
+  .potencia-item{ display:flex; flex-direction:column; gap:16px; }
+  .potencia-item p{ font-size:14.5px; color:var(--descriptor); margin:0; }
 
   /* ---------- proyectos ---------- */
   .case{
@@ -780,6 +791,7 @@
   @media (prefers-reduced-motion: reduce){
     html{ scroll-behavior:auto; }
     .reveal, .lvl{ opacity:1 !important; transform:none !important; transition:none !important; }
+    .hero-atmosphere, .atmo-hex{ animation:none !important; }
   }
 
   /* ================= RESPONSIVE ================= */
@@ -788,10 +800,11 @@
     .nav-cta{ display:none; }
     .burger{ display:flex; }
     .hero-grid{ grid-template-columns:1fr; }
-    .hero-atmosphere svg{ width:80%; }
+    .hex-a{ width:80%; }
     .hero-visual svg{ max-width:220px; }
     .benefits{ grid-template-columns:1fr 1fr; }
     .benefit:nth-child(2n){ border-right:none; }
+    .potencia-grid{ grid-template-columns:1fr 1fr; }
     .case{ grid-template-columns:1fr; }
     .case-art{ border-right:none; border-bottom:1px solid var(--filete); }
     .about-panel{ grid-template-columns:1fr; }
@@ -804,6 +817,7 @@
   }
   @media (max-width: 600px){
     .benefits{ grid-template-columns:1fr; }
+    .potencia-grid{ grid-template-columns:1fr; }
     .benefit{ border-right:none !important; }
     .services-grid{ grid-template-columns:1fr; }
     .service-card{ border-right:none !important; }
@@ -892,7 +906,17 @@
   <section class="hero">
     <div class="hero-panel">
       <div class="hero-atmosphere" aria-hidden="true">
-        <svg aria-hidden="true" viewBox="0 0 200 200" xmlns="http://www.w3.org/2000/svg" fill="none" stroke="#FFFFFF" stroke-width="1.1" stroke-linecap="square" stroke-linejoin="miter">
+        <svg class="atmo-hex hex-a" aria-hidden="true" viewBox="0 0 200 200" xmlns="http://www.w3.org/2000/svg" fill="none" stroke="#FFFFFF" stroke-width="1.1" stroke-linecap="square" stroke-linejoin="miter">
+          <polygon points="100,20 176,64 100,108 24,64"></polygon>
+          <polygon points="100,20 176,64 176,152 100,196 24,152 24,64"></polygon>
+          <line x1="100" y1="108" x2="100" y2="196"></line><line x1="100" y1="108" x2="24" y2="64"></line><line x1="100" y1="108" x2="176" y2="64"></line>
+        </svg>
+        <svg class="atmo-hex hex-b" aria-hidden="true" viewBox="0 0 200 200" xmlns="http://www.w3.org/2000/svg" fill="none" stroke="#FFFFFF" stroke-width="1.1" stroke-linecap="square" stroke-linejoin="miter">
+          <polygon points="100,20 176,64 100,108 24,64"></polygon>
+          <polygon points="100,20 176,64 176,152 100,196 24,152 24,64"></polygon>
+          <line x1="100" y1="108" x2="100" y2="196"></line><line x1="100" y1="108" x2="24" y2="64"></line><line x1="100" y1="108" x2="176" y2="64"></line>
+        </svg>
+        <svg class="atmo-hex hex-c" aria-hidden="true" viewBox="0 0 200 200" xmlns="http://www.w3.org/2000/svg" fill="none" stroke="#FFFFFF" stroke-width="1.1" stroke-linecap="square" stroke-linejoin="miter">
           <polygon points="100,20 176,64 100,108 24,64"></polygon>
           <polygon points="100,20 176,64 176,152 100,196 24,152 24,64"></polygon>
           <line x1="100" y1="108" x2="100" y2="196"></line><line x1="100" y1="108" x2="24" y2="64"></line><line x1="100" y1="108" x2="176" y2="64"></line>
@@ -914,13 +938,6 @@
 
           <div class="hero-visual" id="heroVisual">
             <svg aria-hidden="true" viewBox="0 0 240 300" xmlns="http://www.w3.org/2000/svg">
-              <line class="dim-line" x1="8" y1="15" x2="8" y2="280"></line>
-              <line class="dim-line" x1="4" y1="15" x2="12" y2="15"></line>
-              <line class="dim-line" x1="4" y1="82" x2="12" y2="82"></line>
-              <line class="dim-line" x1="4" y1="149" x2="12" y2="149"></line>
-              <line class="dim-line" x1="4" y1="216" x2="12" y2="216"></line>
-              <line class="dim-line" x1="4" y1="280" x2="12" y2="280"></line>
-
               <g transform="translate(40,204)">
               <g class="lvl n0">
                 <g fill="none" stroke="rgba(255,255,255,0.85)" stroke-width="3.6" stroke-linecap="square" stroke-linejoin="miter">
@@ -928,7 +945,7 @@
                   <polygon points="50,10 88,32 88,68 50,90 12,68 12,32"></polygon>
                   <line x1="50" y1="54" x2="50" y2="90"></line><line x1="50" y1="54" x2="12" y2="32"></line><line x1="50" y1="54" x2="88" y2="32"></line>
                 </g>
-                <text x="100" y="48" class="node-label">N ±0.00 — sitio</text>
+                <text x="100" y="48" class="node-label">Interiorismo</text>
               </g>
               </g>
 
@@ -939,7 +956,7 @@
                   <polygon points="50,10 88,32 88,68 50,90 12,68 12,32"></polygon>
                   <line x1="50" y1="54" x2="50" y2="90"></line><line x1="50" y1="54" x2="12" y2="32"></line><line x1="50" y1="54" x2="88" y2="32"></line>
                 </g>
-                <text x="100" y="48" class="node-label">N +3.50 — estructura</text>
+                <text x="100" y="48" class="node-label">Instalaciones</text>
               </g>
               </g>
 
@@ -950,7 +967,7 @@
                   <polygon points="50,10 88,32 88,68 50,90 12,68 12,32"></polygon>
                   <line x1="50" y1="54" x2="50" y2="90"></line><line x1="50" y1="54" x2="12" y2="32"></line><line x1="50" y1="54" x2="88" y2="32"></line>
                 </g>
-                <text x="100" y="48" class="node-label">N +7.00 — envolvente</text>
+                <text x="100" y="48" class="node-label">Arquitectura</text>
               </g>
               </g>
 
@@ -961,12 +978,40 @@
                   <polygon points="50,10 88,32 88,68 50,90 12,68 12,32"></polygon>
                   <line x1="50" y1="54" x2="50" y2="90"></line><line x1="50" y1="54" x2="12" y2="32"></line><line x1="50" y1="54" x2="88" y2="32"></line>
                 </g>
-                <text x="100" y="48" class="node-label">N +10.50 — modelo</text>
+                <text x="100" y="48" class="node-label">Estructura</text>
               </g>
               </g>
             </svg>
             <p class="hero-caption mono">Modelo BIM coordinado — ARCHBIM Studio</p>
           </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ================= CÓMO BIM POTENCIA TUS PROYECTOS ================= -->
+  <section class="sheet potencia-band" id="potencia">
+    <div class="wrap">
+      <div class="potencia-head reveal">
+        <h2>¿Cómo BIM potencia tus proyectos?</h2>
+        <p>Cuatro formas en las que trabajar en BIM cambia el proceso, desde el primer boceto hasta la documentación final.</p>
+      </div>
+      <div class="potencia-grid reveal">
+        <div class="potencia-item">
+          <span class="bubble mono">1</span>
+          <p>Diseña de lo general a lo particular, controlando los detalles, para hacer la mejor arquitectura posible.</p>
+        </div>
+        <div class="potencia-item">
+          <span class="bubble mono">2</span>
+          <p>Explora posibilidades conceptuales de diseño, trabajando de forma libre y precisa desde el primer momento.</p>
+        </div>
+        <div class="potencia-item">
+          <span class="bubble mono">3</span>
+          <p>Define la arquitectura y todos sus componentes, materiales y tecnologías, documentando desde un único modelo y reduciendo al máximo los errores propios de los procesos clásicos de documentación.</p>
+        </div>
+        <div class="potencia-item">
+          <span class="bubble mono">4</span>
+          <p>Trabaja de forma colaborativa en el edificio virtual, favoreciendo el intercambio con colegas y asesores de forma más efectiva.</p>
         </div>
       </div>
     </div>
@@ -978,7 +1023,7 @@
       <div class="sheet-head reveal">
         <div>
           <p class="sheet-label">L-00 · Servicios</p>
-          <h2>Cuatro formas de entrar en BIM, según de dónde partas.</h2>
+          <h2>Cuatro formas de empezar con BIM, según de dónde partas.</h2>
         </div>
         <p class="sheet-note">Del primer estándar de modelado a la documentación lista para licitar. Elegís el alcance, nosotros ponemos el flujo.</p>
       </div>

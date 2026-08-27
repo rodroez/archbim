@@ -620,33 +620,19 @@
 
   /* ---------- clientes ---------- */
   .clients{
-    display:grid;
-    grid-template-columns:repeat(2,1fr);
-    border-top:1px solid var(--filete);
-    border-left:1px solid var(--filete);
+    display:flex;
+    flex-wrap:wrap;
+    align-items:center;
+    gap:28px 52px;
   }
   .client{
-    border-right:1px solid var(--filete);
-    border-bottom:1px solid var(--filete);
-    padding:24px 28px;
     display:flex;
-    justify-content:space-between;
     align-items:center;
     gap:16px;
-    transition:background .2s ease;
   }
-  .client:hover{ background:var(--accent-tint); }
-  .client-id{ display:flex; align-items:center; gap:16px; }
+  .client-logo{ display:block; max-height:38px; width:auto; }
+  .client-logo-boost{ max-height:50px; }
   .mark-lg{ width:42px; height:42px; font-size:12px; border-radius:8px; }
-  .client .name{ font-size:16.5px; font-weight:500; }
-  .client .loc{
-    font-family:"IBM Plex Mono", monospace;
-    font-size:11.5px;
-    color:var(--metadata);
-    text-transform:uppercase;
-    letter-spacing:.04em;
-    white-space:nowrap;
-  }
 
   /* ---------- planes / como empezar ---------- */
   .plans{
@@ -809,7 +795,6 @@
     .case-art{ border-right:none; border-bottom:1px solid var(--filete); }
     .about-panel{ grid-template-columns:1fr; }
     .about-art{ border-right:none; border-bottom:1px solid var(--filete); }
-    .clients{ grid-template-columns:1fr; }
     .plans{ grid-template-columns:1fr; }
     .form-panel{ grid-template-columns:1fr; }
     .foot-grid{ grid-template-columns:1fr 1fr; gap:32px; }
@@ -818,6 +803,7 @@
   @media (max-width: 600px){
     .benefits{ grid-template-columns:1fr; }
     .potencia-grid{ grid-template-columns:1fr; }
+    .clients{ gap:20px 32px; }
     .benefit{ border-right:none !important; }
     .services-grid{ grid-template-columns:1fr; }
     .service-card{ border-right:none !important; }
@@ -1159,17 +1145,15 @@
         </div>
       </div>
 
-      <p class="sheet-note reveal" style="text-align:left; max-width:60ch; margin:-36px 0 40px;">Todavía no tenemos los isotipos de cada estudio — las marcas de abajo son iniciales provisorias. Si nos pasás sus logos, los reemplazamos.</p>
-
       <div class="clients reveal">
-        <div class="client"><div class="client-id"><span class="mark mark-lg">BMA</span><span class="name">BMA Arquitectos Asociados</span></div></div>
-        <div class="client"><div class="client-id"><span class="mark mark-lg">DP</span><span class="name">DIPA Arquitectos</span></div></div>
-        <div class="client"><div class="client-id"><span class="mark mark-lg">RDR</span><span class="name">RDR Arquitectos</span></div></div>
-        <div class="client"><div class="client-id"><span class="mark mark-lg">EC</span><span class="name">Estudio Clusellas</span></div><span class="loc">Clusellas + Ades</span></div>
-        <div class="client"><div class="client-id"><span class="mark mark-lg">MDS</span><span class="name">MDS Oficina de Arquitectura</span></div></div>
-        <div class="client"><div class="client-id"><span class="mark mark-lg">MK</span><span class="name">Metrika Ltda.</span></div><span class="loc">Miami, FL, USA</span></div>
-        <div class="client"><div class="client-id"><span class="mark mark-lg">LI</span><span class="name">Lamas Ingeniería</span></div></div>
-        <div class="client"><div class="client-id"><span class="mark mark-lg">VM</span><span class="name">Vialmun Ltda. SA</span></div></div>
+        <div class="client"><img class="client-logo" src="logos/logo-bma.jpg" alt="BMA Arquitectos Asociados"></div>
+        <div class="client"><img class="client-logo" src="logos/logo-dipa.png" alt="DIPA Arquitectos"></div>
+        <div class="client"><img class="client-logo" src="logos/logo-rdr.svg" alt="RDR Arquitectos"></div>
+        <div class="client"><img class="client-logo" src="logos/logo-clusellas.png" alt="Estudio Clusellas — Clusellas + Ades"></div>
+        <div class="client"><img class="client-logo" src="logos/logo-mds.png" alt="MDS Oficina de Arquitectura"></div>
+        <div class="client"><img class="client-logo" src="logos/logo-metrika.png" alt="Metrika Ltda. — Miami, FL, USA"></div>
+        <div class="client"><img class="client-logo" src="logos/logo-lamas.png" alt="Lamas Ingeniería"></div>
+        <div class="client"><img class="client-logo client-logo-boost" src="logos/logo-vialmani.png" alt="Vialmani S.A."></div>
       </div>
     </div>
   </section>

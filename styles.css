@@ -526,10 +526,12 @@ section.sheet + section.sheet{ border-top:1px solid var(--filete); }
 
 /* ---------- clientes ---------- */
 .clients{
-  display:flex;
-  flex-wrap:wrap;
+  display:grid;
+  grid-template-columns:repeat(4, auto);
+  justify-content:space-between;
   align-items:center;
-  gap:28px 52px;
+  row-gap:32px;
+  column-gap:28px;
 }
 .client{
   display:flex;
@@ -700,13 +702,14 @@ footer{ background:var(--ink); color:var(--paper); padding:72px 0 0; }
   .about-panel{ grid-template-columns:1fr; }
   .about-art{ border-right:none; border-bottom:1px solid var(--filete); }
   .plans{ grid-template-columns:1fr 1fr; }
+  .clients{ grid-template-columns:repeat(2, auto); }
   .form-panel{ grid-template-columns:1fr; }
   .foot-grid{ grid-template-columns:1fr 1fr; gap:32px; }
   .foot-brand{ grid-column:1/-1; }
 }
 @media (max-width: 600px){
   .potencia-grid{ grid-template-columns:1fr; }
-  .clients{ gap:20px 32px; }
+  .clients{ grid-template-columns:1fr; row-gap:20px; column-gap:32px; }
   .plans{ grid-template-columns:1fr; }
   .field-row{ grid-template-columns:1fr; }
   .sheet-note{ text-align:left; }

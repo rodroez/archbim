@@ -55,763 +55,7 @@
   ]
 }
 </script>
-<style>
-  :root{
-    --ink:#16181A;
-    --descriptor:#3A3D40;
-    --volume:#5A5D60;
-    --metadata:#6D6965;
-    --filete:#C6C2BA;
-    --paper:#F3F1ED;
-    --white:#FFFFFF;
-    --accent:#0F7A8C;
-    --accent-mid:#1C93A0;
-    --accent-light:#8FD0D6;
-    --accent-tint:#E4F3F4;
-    --accent-deep:#0B5A66;
-    --accent-glow:#4FE6DE;
-    --max: 1280px;
-    --pad: clamp(20px, 4vw, 64px);
-  }
-  *{box-sizing:border-box;}
-  html{scroll-behavior:smooth;}
-  body{
-    margin:0;
-    background:var(--paper);
-    color:var(--ink);
-    font-family:"Archivo", sans-serif;
-    font-weight:400;
-    -webkit-font-smoothing:antialiased;
-    line-height:1.5;
-  }
-  img,svg{display:block;max-width:100%;}
-  a{color:inherit;}
-  ul{margin:0;padding:0;}
-  a:focus-visible, button:focus-visible, summary:focus-visible, input:focus-visible, select:focus-visible, textarea:focus-visible{
-    outline:2px solid var(--accent-deep);
-    outline-offset:3px;
-    border-radius:2px;
-  }
-  .hero-panel :focus-visible{ outline-color:var(--accent-glow); }
-  .mono{
-    font-family:"IBM Plex Mono", monospace;
-    letter-spacing:0.02em;
-  }
-  .wrap{
-    max-width:var(--max);
-    margin:0 auto;
-    padding-left:var(--pad);
-    padding-right:var(--pad);
-  }
-  section[id], .service-card[id]{ scroll-margin-top:96px; }
-
-  /* ---------- eyebrow / sheet label ---------- */
-  .sheet-label{
-    display:flex;
-    align-items:center;
-    gap:10px;
-    font-family:"IBM Plex Mono", monospace;
-    font-size:12.5px;
-    letter-spacing:0.12em;
-    text-transform:uppercase;
-    color:var(--metadata);
-    margin-bottom:22px;
-  }
-  .sheet-label::before{
-    content:"";
-    width:22px;
-    height:1px;
-    background:var(--metadata);
-    display:block;
-  }
-
-  /* ---------- grid bubble ---------- */
-  .bubble{
-    width:34px;height:34px;
-    border-radius:50%;
-    border:1.5px solid var(--accent);
-    color:var(--accent-deep);
-    display:flex;align-items:center;justify-content:center;
-    font-family:"IBM Plex Mono", monospace;
-    font-size:14px;
-    flex-shrink:0;
-    background:var(--accent-tint);
-  }
-
-  /* ================= NAV ================= */
-  header{
-    position:sticky; top:0; z-index:50;
-    background:rgba(243,241,237,0.94);
-    backdrop-filter:blur(6px);
-    border-bottom:1px solid var(--filete);
-  }
-  .nav{
-    display:flex;
-    align-items:center;
-    justify-content:space-between;
-    height:76px;
-  }
-  .brand{ display:flex; align-items:center; }
-  .brand svg{ height:30px; width:auto; }
-  nav.links{ display:flex; align-items:center; gap:8px; }
-  nav.links > a{
-    text-decoration:none;
-    font-size:14.5px;
-    color:var(--descriptor);
-    position:relative;
-    padding:10px 12px;
-  }
-  nav.links > a::after{
-    content:"";
-    position:absolute; left:12px; right:12px; bottom:2px;
-    height:1px; background:var(--ink);
-    transform:scaleX(0); transform-origin:left;
-    transition:transform .25s ease;
-  }
-  nav.links > a:hover::after{ transform:scaleX(1); }
-
-  /* ---------- servicios dropdown ---------- */
-  .has-dropdown{ position:relative; }
-  .dropdown-btn{
-    font-family:"Archivo", sans-serif;
-    font-size:14.5px;
-    color:var(--descriptor);
-    background:none; border:none; cursor:pointer;
-    padding:10px 12px;
-    display:flex; align-items:center; gap:6px;
-  }
-  .dropdown-btn svg{ width:9px; height:9px; transition:transform .2s ease; }
-  .has-dropdown.open .dropdown-btn svg{ transform:rotate(180deg); }
-  .dropdown-panel{
-    position:absolute;
-    top:100%; left:50%;
-    transform:translate(-50%,-6px);
-    width:420px;
-    background:var(--white);
-    border:1px solid var(--filete);
-    box-shadow:0 18px 40px rgba(22,24,26,0.10);
-    padding:10px;
-    display:grid;
-    grid-template-columns:1fr 1fr;
-    gap:2px;
-    opacity:0; visibility:hidden;
-    transition:opacity .18s ease, transform .18s ease, visibility .18s;
-    z-index:60;
-  }
-  .has-dropdown.open .dropdown-panel,
-  .has-dropdown:hover .dropdown-panel{
-    opacity:1; visibility:visible; transform:translate(-50%,0);
-  }
-  .dropdown-item{
-    display:flex; flex-direction:column; gap:4px;
-    padding:14px 14px;
-    text-decoration:none;
-    border-radius:2px;
-  }
-  .dropdown-item:hover{ background:var(--accent-tint); }
-  .dropdown-item .dtitle{
-    display:flex; align-items:center; gap:8px;
-    font-size:14px; font-weight:600; color:var(--ink);
-  }
-  .dropdown-item .dtitle .bubble{ width:22px;height:22px;font-size:11px; }
-  .dropdown-item .ddesc{ font-size:12px; color:var(--metadata); padding-left:30px; }
-  .dropdown-foot{
-    grid-column:1 / -1;
-    border-top:1px solid var(--filete);
-    margin-top:6px; padding-top:10px;
-    text-align:right;
-  }
-  .dropdown-foot a{
-    font-family:"IBM Plex Mono", monospace;
-    font-size:12px;
-    text-decoration:none;
-    color:var(--accent-deep);
-  }
-
-  .nav-cta{
-    font-family:"IBM Plex Mono", monospace;
-    font-size:13px;
-    text-decoration:none;
-    color:var(--white);
-    background:var(--ink);
-    padding:11px 20px;
-    border:1px solid var(--ink);
-    white-space:nowrap;
-  }
-  .nav-cta:hover{ background:var(--accent-deep); border-color:var(--accent-deep); }
-  .burger{
-    display:none;
-    flex-direction:column;
-    gap:5px;
-    background:none;border:none;cursor:pointer;
-    padding:8px;
-  }
-  .burger span{ width:22px; height:1.5px; background:var(--ink); display:block; }
-  .mobile-panel{
-    display:none;
-    flex-direction:column;
-    padding:8px var(--pad) 28px;
-    border-bottom:1px solid var(--filete);
-    background:var(--paper);
-  }
-  .mobile-panel a{
-    color:var(--ink);
-    text-decoration:none;
-    padding:14px 0;
-    border-bottom:1px solid var(--filete);
-    font-size:15px;
-  }
-  .mobile-panel a.sub{ padding-left:16px; font-size:14px; color:var(--descriptor); }
-  .mobile-panel a:last-child{ border-bottom:none; }
-  body.nav-open .mobile-panel{ display:flex; }
-
-  /* ================= HERO ================= */
-  .hero-panel{
-    position:relative;
-    overflow:hidden;
-    background:
-      radial-gradient(circle at 88% 8%, rgba(143,208,214,0.16), transparent 42%),
-      linear-gradient(155deg, #0A0C0E 0%, #0B2A2E 52%, #0A3A40 100%);
-    padding:clamp(56px,8vw,104px) 0;
-  }
-  .hero-atmosphere{
-    position:absolute; inset:0;
-    z-index:0;
-    pointer-events:none;
-    background-image:radial-gradient(rgba(255,255,255,0.055) 1px, transparent 1px);
-    background-size:24px 24px;
-    animation:gridDrift 60s linear infinite;
-  }
-  .atmo-hex{ position:absolute; }
-  .hex-a{ right:-20%; bottom:-30%; width:56%; max-width:480px; height:auto; opacity:0.14; animation:floatA 22s ease-in-out infinite; }
-  .hex-b{ left:-10%; top:4%; width:30%; max-width:230px; height:auto; opacity:0.09; animation:floatB 28s ease-in-out infinite; }
-  .hex-c{ right:6%; top:-8%; width:19%; max-width:150px; height:auto; opacity:0.11; animation:floatC 34s ease-in-out infinite; }
-  @keyframes gridDrift{ from{ background-position:0 0; } to{ background-position:240px 240px; } }
-  @keyframes floatA{ 0%,100%{ transform:translate(0,0) rotate(0deg); } 50%{ transform:translate(-14px,10px) rotate(3deg); } }
-  @keyframes floatB{ 0%,100%{ transform:translate(0,0) rotate(0deg); } 50%{ transform:translate(11px,-13px) rotate(-4deg); } }
-  @keyframes floatC{ 0%,100%{ transform:translate(0,0) rotate(0deg); } 50%{ transform:translate(-9px,9px) rotate(4deg); } }
-  .hero-grid{
-    position:relative;
-    z-index:1;
-    display:grid;
-    grid-template-columns:1.05fr 0.95fr;
-    gap:clamp(28px,4vw,56px);
-    align-items:center;
-  }
-  .eyebrow{
-    font-family:"IBM Plex Mono", monospace;
-    font-size:13px;
-    letter-spacing:0.14em;
-    text-transform:uppercase;
-    color:var(--metadata);
-    margin:0 0 26px;
-    display:flex; align-items:center; gap:12px;
-  }
-  .eyebrow .dot{ width:6px;height:6px;border-radius:50%;background:var(--volume); }
-  .hero-panel .eyebrow{ color:rgba(255,255,255,0.82); }
-  .hero-panel .eyebrow .dot{ background:var(--accent-glow); }
-  h1.headline{
-    font-size:clamp(36px, 4.6vw, 54px);
-    line-height:1.1;
-    letter-spacing:-0.01em;
-    margin:0 0 22px;
-  }
-  h1.headline .w{ font-weight:600; }
-  h1.headline .l{ display:block; font-weight:400; font-style:italic; color:var(--descriptor); }
-  .hero-panel h1.headline{ color:var(--white); }
-  .hero-panel h1.headline .w{ color:var(--white); }
-  .hero-panel h1.headline .l{ color:rgba(255,255,255,0.75); }
-  .lede{
-    font-size:clamp(15.5px, 1.4vw, 17.5px);
-    color:var(--descriptor);
-    max-width:52ch;
-    margin:0 0 34px;
-  }
-  .hero-panel .lede{ color:rgba(255,255,255,0.88); }
-  .cta-row{
-    display:flex;
-    flex-wrap:wrap;
-    gap:14px;
-    align-items:center;
-    margin-bottom:28px;
-  }
-  .btn{
-    font-family:"IBM Plex Mono", monospace;
-    font-size:13.5px;
-    letter-spacing:0.01em;
-    text-decoration:none;
-    padding:15px 22px;
-    display:inline-flex;
-    align-items:center;
-    gap:10px;
-    border:1px solid var(--ink);
-    transition:background .2s ease, color .2s ease, opacity .2s ease, border-color .2s ease;
-    cursor:pointer;
-  }
-  .btn-primary{ background:var(--ink); color:var(--white); border-color:var(--ink); }
-  .btn-primary:hover{ background:var(--accent-deep); border-color:var(--accent-deep); }
-  .btn-outline{ background:transparent; color:var(--ink); }
-  .btn-outline:hover{ background:var(--ink); color:var(--white); }
-  .hero-panel .btn-primary{ background:var(--white); color:var(--ink); border-color:var(--white); }
-  .hero-panel .btn-primary:hover{ background:var(--accent-glow); border-color:var(--accent-glow); color:var(--ink); }
-  .hero-panel .btn-outline{ color:var(--white); border-color:rgba(255,255,255,0.4); }
-  .hero-panel .btn-outline:hover{ background:rgba(255,255,255,0.1); color:var(--white); border-color:rgba(255,255,255,0.7); }
-  .compat-row{
-    font-family:"IBM Plex Mono", monospace;
-    font-size:12px;
-    color:rgba(255,255,255,0.84);
-    letter-spacing:.02em;
-  }
-  .compat-row b{ color:#fff; font-weight:500; }
-  .badge{
-    font-family:"IBM Plex Mono", monospace;
-    font-size:10.5px;
-    letter-spacing:0.08em;
-    text-transform:uppercase;
-    background:var(--paper);
-    border:1px solid var(--metadata);
-    color:var(--metadata);
-    padding:2px 7px;
-  }
-
-  /* ---------- hero visual ---------- */
-  .hero-visual{
-    position:relative;
-    display:flex;
-    flex-direction:column;
-    align-items:center;
-    justify-content:center;
-    padding:clamp(12px,2vw,20px);
-  }
-  .hero-visual::before{
-    content:"";
-    position:absolute;
-    width:min(340px,80%); aspect-ratio:1;
-    background:radial-gradient(circle, rgba(79,230,222,0.30), transparent 68%);
-    filter:blur(30px);
-    z-index:-1;
-  }
-  .hero-visual svg{ width:100%; max-width:280px; height:auto; overflow:visible; }
-  .hero-caption{
-    margin-top:14px;
-    font-size:11.5px;
-    color:rgba(255,255,255,0.62);
-    letter-spacing:.03em;
-  }
-  .node-label{ font-family:"IBM Plex Mono", monospace; font-size:10.5px; fill:rgba(255,255,255,0.78); }
-  .lvl{ opacity:0; transform:translateY(16px); transition:opacity .7s ease, transform .7s ease; }
-  .hero-visual.in-view .lvl{ opacity:1; transform:translateY(0); }
-  .hero-visual.in-view .n0{ transition-delay:.05s; }
-  .hero-visual.in-view .n1{ transition-delay:.18s; }
-  .hero-visual.in-view .n2{ transition-delay:.31s; }
-  .hero-visual.in-view .n3{ transition-delay:.44s; }
-
-  /* ---------- client monogram marks (placeholder — no real logo files supplied) ---------- */
-  .mark{
-    flex-shrink:0;
-    display:flex; align-items:center; justify-content:center;
-    width:30px; height:30px;
-    border:1px solid var(--filete);
-    border-radius:6px;
-    background:var(--white);
-    font-family:"IBM Plex Mono", monospace;
-    font-weight:500;
-    font-size:8.5px;
-    letter-spacing:0;
-    padding:0 2px;
-    color:var(--accent-deep);
-  }
-
-  /* ================= SECTION GENERIC ================= */
-  section.sheet{ padding:clamp(64px,9vw,120px) 0; }
-  section.sheet + section.sheet{ border-top:1px solid var(--filete); }
-  .sheet-head{
-    display:flex;
-    justify-content:space-between;
-    align-items:flex-end;
-    gap:40px;
-    margin-bottom:56px;
-    flex-wrap:wrap;
-  }
-  .sheet-head h2{
-    font-size:clamp(28px,3.6vw,44px);
-    line-height:1.08;
-    letter-spacing:-0.01em;
-    margin:0;
-    max-width:20ch;
-    font-weight:500;
-  }
-  .sheet-note{
-    font-family:"IBM Plex Mono", monospace;
-    font-size:12.5px;
-    color:var(--metadata);
-    max-width:30ch;
-    text-align:right;
-  }
-
-  /* ---------- services grid ---------- */
-  .services-grid{
-    display:grid;
-    grid-template-columns:repeat(2,1fr);
-    border-top:1px solid var(--filete);
-    border-left:1px solid var(--filete);
-  }
-  .service-card{
-    border-right:1px solid var(--filete);
-    border-bottom:1px solid var(--filete);
-    padding:clamp(26px,3vw,38px);
-    display:flex;
-    flex-direction:column;
-  }
-  .service-card .top-row{ display:flex; align-items:center; gap:12px; margin-bottom:16px; flex-wrap:wrap; }
-  .service-card h3{ font-size:clamp(18px,1.9vw,22px); font-weight:600; margin:0; letter-spacing:-0.01em; }
-  .service-card p{ font-size:14.5px; color:var(--descriptor); margin:0 0 18px; flex-grow:1; }
-  .service-card .tag-row{ display:flex; gap:8px; flex-wrap:wrap; margin:-6px 0 18px; }
-  .service-card .tag{
-    font-family:"IBM Plex Mono", monospace;
-    font-size:11px; letter-spacing:.02em;
-    color:var(--accent-deep);
-    background:var(--accent-tint);
-    border:1px solid var(--accent-light);
-    padding:4px 9px;
-  }
-  .service-card .alt-link{ margin-top:auto; align-self:flex-start; }
-  .alt-link{
-    font-family:"IBM Plex Mono", monospace;
-    font-size:13px;
-    text-decoration:none;
-    color:var(--ink);
-    border-bottom:1px solid var(--ink);
-    padding-bottom:2px;
-    transition:color .2s ease, border-color .2s ease;
-  }
-  .alt-link:hover{ color:var(--accent-deep); border-color:var(--accent-deep); }
-
-  /* ---------- benefits grid ---------- */
-  .benefits{
-    display:grid;
-    grid-template-columns:repeat(4,1fr);
-    gap:0;
-    border-top:1px solid var(--filete);
-  }
-  .benefit{
-    border-right:1px solid var(--filete);
-    border-bottom:1px solid var(--filete);
-    padding:28px 24px 32px;
-  }
-  .benefit:last-child{ border-right:none; }
-  .benefit .bubble{ margin-bottom:22px; }
-  .benefit h4{ font-size:16.5px; font-weight:600; margin:0 0 10px; }
-  .benefit p{ font-size:13.5px; color:var(--descriptor); margin:0; }
-
-  /* ---------- cómo bim potencia tus proyectos ---------- */
-  .potencia-band{ background:var(--accent-tint); }
-  .potencia-head{ max-width:58ch; margin-bottom:48px; }
-  .potencia-head h2{ font-size:clamp(28px,3.6vw,44px); line-height:1.08; letter-spacing:-0.01em; margin:0 0 14px; font-weight:500; }
-  .potencia-head p{ margin:0; font-size:clamp(15.5px,1.4vw,17.5px); color:var(--descriptor); max-width:56ch; }
-  .potencia-grid{ display:grid; grid-template-columns:repeat(4,1fr); gap:28px; }
-  .potencia-item{ display:flex; flex-direction:column; gap:16px; }
-  .potencia-item p{ font-size:14.5px; color:var(--descriptor); margin:0; }
-
-  /* ---------- proyectos ---------- */
-  .case{
-    display:grid;
-    grid-template-columns:0.9fr 1.1fr;
-    gap:0;
-    border:1px solid var(--filete);
-  }
-  .case-art{
-    background:var(--white);
-    padding:clamp(28px,4vw,50px);
-    display:flex;
-    align-items:center;
-    justify-content:center;
-    border-right:1px solid var(--filete);
-  }
-  .case-art svg{ width:100%; max-width:340px; height:auto; }
-  .case-body{
-    padding:clamp(28px,4vw,50px);
-    display:flex;
-    flex-direction:column;
-    justify-content:center;
-  }
-  .tags{ display:flex; flex-wrap:wrap; gap:8px; margin-bottom:18px; }
-  .tag{
-    font-family:"IBM Plex Mono", monospace;
-    font-size:10.5px;
-    letter-spacing:.06em;
-    text-transform:uppercase;
-    border:1px solid var(--accent-light);
-    background:var(--accent-tint);
-    color:var(--accent-deep);
-    padding:4px 9px;
-  }
-  .case-body h3{
-    font-size:clamp(24px,3vw,32px);
-    letter-spacing:-0.01em;
-    margin:0 0 10px;
-    font-weight:600;
-  }
-  .case-loc{
-    font-family:"IBM Plex Mono", monospace;
-    font-size:13px;
-    color:var(--volume);
-    margin-bottom:22px;
-  }
-  .case-body p.desc{ color:var(--descriptor); font-size:15px; max-width:52ch; margin:0 0 24px; }
-  .case-meta{ display:flex; gap:32px; flex-wrap:wrap; margin-bottom:26px; }
-  .case-meta div{ font-size:13px; }
-  .case-meta .k{ font-family:"IBM Plex Mono", monospace; color:var(--metadata); font-size:11px; text-transform:uppercase; letter-spacing:.08em; margin-bottom:4px; }
-  .case-cta{ text-align:right; }
-
-  /* ---------- nosotros ---------- */
-  .about-panel{
-    display:grid;
-    grid-template-columns:0.9fr 1.1fr;
-    gap:0;
-    border:1px solid var(--filete);
-  }
-  .about-art{
-    background:var(--white);
-    padding:clamp(28px,4vw,50px);
-    display:flex;
-    flex-direction:column;
-    align-items:center;
-    justify-content:center;
-    gap:18px;
-    border-right:1px solid var(--filete);
-    text-align:center;
-  }
-  .about-mark{
-    width:104px;height:104px;
-    border-radius:50%;
-    border:1.5px solid var(--accent);
-    background:var(--accent-tint);
-    color:var(--accent-deep);
-    display:flex;align-items:center;justify-content:center;
-    font-size:32px;
-    letter-spacing:0;
-  }
-  .about-role{
-    font-family:"IBM Plex Mono", monospace;
-    font-size:12px;
-    letter-spacing:.05em;
-    text-transform:uppercase;
-    color:var(--metadata);
-  }
-  .about-body{
-    padding:clamp(28px,4vw,50px);
-    display:flex;
-    flex-direction:column;
-    justify-content:center;
-  }
-  .about-body h3{
-    font-size:clamp(24px,3vw,32px);
-    letter-spacing:-0.01em;
-    margin:0 0 4px;
-    font-weight:600;
-  }
-  .about-title{ font-family:"IBM Plex Mono", monospace; font-size:13px; color:var(--accent-deep); margin:0 0 20px; }
-  .about-body p.desc{ color:var(--descriptor); font-size:15px; max-width:58ch; margin:0 0 16px; }
-  .about-meta{ display:flex; gap:32px; flex-wrap:wrap; margin:10px 0 26px; }
-  .about-meta div{ font-size:13px; }
-  .about-meta .k{ font-family:"IBM Plex Mono", monospace; color:var(--metadata); font-size:11px; text-transform:uppercase; letter-spacing:.08em; margin-bottom:4px; }
-  .about-cta{ text-align:right; }
-
-  /* ---------- clientes ---------- */
-  .clients{
-    display:flex;
-    flex-wrap:wrap;
-    align-items:center;
-    gap:28px 52px;
-  }
-  .client{
-    display:flex;
-    align-items:center;
-    gap:16px;
-  }
-  .client-logo{ display:block; max-height:38px; width:auto; }
-  .client-logo-boost{ max-height:50px; }
-  .mark-lg{ width:42px; height:42px; font-size:12px; border-radius:8px; }
-
-  /* ---------- planes / como empezar ---------- */
-  .plans{
-    display:grid;
-    grid-template-columns:repeat(3,1fr);
-    gap:1px;
-    background:var(--filete);
-    border:1px solid var(--filete);
-  }
-  .plan-card{
-    background:var(--paper);
-    padding:32px 28px;
-    display:flex;
-    flex-direction:column;
-    gap:14px;
-    position:relative;
-  }
-  .plan-card.featured{ background:var(--accent-tint); }
-  .plan-badge{
-    position:absolute; top:-1px; right:-1px;
-    font-family:"IBM Plex Mono", monospace;
-    font-size:10px; letter-spacing:.06em; text-transform:uppercase;
-    background:var(--accent); color:var(--white);
-    padding:5px 10px;
-  }
-  .plan-card .num{ font-family:"IBM Plex Mono", monospace; font-size:12px; color:var(--metadata); }
-  .plan-card h4{ margin:0; font-size:19px; font-weight:600; }
-  .plan-card > p{ margin:0; font-size:13.5px; color:var(--descriptor); }
-  .plan-list{ margin:4px 0 8px; border-top:1px solid var(--filete); padding-top:14px; flex-grow:1; }
-  .plan-list div{
-    font-family:"IBM Plex Mono", monospace;
-    font-size:12px; color:var(--descriptor);
-    padding:5px 0; display:flex; gap:8px;
-  }
-  .plan-list div::before{ content:"–"; color:var(--metadata); }
-
-  /* ---------- FAQ ---------- */
-  .faq{ max-width:900px; border-top:1px solid var(--filete); }
-  .faq details{
-    border-bottom:1px solid var(--filete);
-    padding:22px 0;
-  }
-  .faq summary{
-    list-style:none;
-    cursor:pointer;
-    display:flex;
-    justify-content:space-between;
-    align-items:center;
-    gap:20px;
-    font-size:17px;
-    font-weight:500;
-  }
-  .faq summary::-webkit-details-marker{ display:none; }
-  .faq summary .plus{
-    flex-shrink:0;
-    width:22px;height:22px;
-    border:1px solid var(--ink);
-    border-radius:50%;
-    position:relative;
-  }
-  .faq summary .plus::before, .faq summary .plus::after{
-    content:"";
-    position:absolute; top:50%; left:50%;
-    background:var(--ink);
-    transform:translate(-50%,-50%);
-  }
-  .faq summary .plus::before{ width:9px; height:1px; }
-  .faq summary .plus::after{ width:1px; height:9px; transition:transform .2s ease; }
-  .faq details[open] summary .plus::after{ transform:translate(-50%,-50%) rotate(90deg); opacity:0; }
-  .faq details[open] summary{ color:var(--accent-deep); }
-  .faq details[open] summary .plus{ border-color:var(--accent); }
-  .faq details[open] summary .plus::before, .faq details[open] summary .plus::after{ background:var(--accent); }
-  .faq .faq-a{
-    font-size:15px;
-    color:var(--descriptor);
-    max-width:64ch;
-    margin:16px 0 0;
-  }
-
-  /* ---------- contacto ---------- */
-  .form-panel{
-    display:grid;
-    grid-template-columns:0.85fr 1.15fr;
-    gap:clamp(30px,5vw,72px);
-  }
-  .form-panel h3{ font-size:clamp(24px,3vw,32px); letter-spacing:-0.01em; margin:0 0 16px; font-weight:600; }
-  .form-panel .lede{ margin:0; max-width:none; }
-  form{ display:flex; flex-direction:column; gap:18px; }
-  .field-row{ display:grid; grid-template-columns:1fr 1fr; gap:18px; }
-  label{
-    font-family:"IBM Plex Mono", monospace;
-    font-size:11px;
-    text-transform:uppercase;
-    letter-spacing:.06em;
-    color:var(--metadata);
-    display:block;
-    margin-bottom:8px;
-  }
-  input, select, textarea{
-    width:100%;
-    background:transparent;
-    border:none;
-    border-bottom:1px solid var(--filete);
-    padding:9px 2px;
-    font-family:"Archivo", sans-serif;
-    font-size:15px;
-    color:var(--ink);
-  }
-  input:focus, select:focus, textarea:focus{ outline:none; border-bottom-color:var(--accent); }
-  textarea{ resize:vertical; min-height:70px; }
-  .submit-row{ display:flex; align-items:center; gap:18px; margin-top:6px; }
-  #form-msg{ font-family:"IBM Plex Mono", monospace; font-size:12.5px; color:var(--volume); }
-
-  /* ================= FOOTER ================= */
-  footer{ background:var(--ink); color:var(--paper); padding:72px 0 0; }
-  .foot-grid{
-    display:grid;
-    grid-template-columns:1.2fr 0.8fr 0.8fr 1fr;
-    gap:40px;
-    padding-bottom:56px;
-    border-bottom:1px solid #33363A;
-  }
-  .foot-brand svg{ height:28px; margin-bottom:20px; }
-  .foot-brand p{ color:#B7B4AE; font-size:14px; max-width:34ch; margin:0; }
-  .foot-col h5{
-    font-family:"IBM Plex Mono", monospace;
-    font-size:11px; letter-spacing:.1em; text-transform:uppercase;
-    color:#8B8884; margin:0 0 18px;
-  }
-  .foot-col a{ display:block; color:#E4E2DD; text-decoration:none; font-size:14.5px; padding:6px 0; }
-  .foot-col a:hover{ color:var(--paper); text-decoration:underline; }
-  .foot-bottom{
-    display:flex; justify-content:space-between; align-items:center;
-    padding:22px 0; flex-wrap:wrap; gap:10px;
-  }
-  .foot-bottom span{ font-family:"IBM Plex Mono", monospace; font-size:11px; color:#6E716F; letter-spacing:.04em; }
-
-  /* ================= REVEAL ================= */
-  .reveal{ opacity:0; transform:translateY(14px); transition:opacity .6s ease, transform .6s ease; }
-  .reveal.in-view{ opacity:1; transform:translateY(0); }
-
-  @media (prefers-reduced-motion: reduce){
-    html{ scroll-behavior:auto; }
-    .reveal, .lvl{ opacity:1 !important; transform:none !important; transition:none !important; }
-    .hero-atmosphere, .atmo-hex{ animation:none !important; }
-  }
-
-  /* ================= RESPONSIVE ================= */
-  @media (max-width: 980px){
-    nav.links{ display:none; }
-    .nav-cta{ display:none; }
-    .burger{ display:flex; }
-    .hero-grid{ grid-template-columns:1fr; }
-    .hex-a{ width:80%; }
-    .hero-visual svg{ max-width:220px; }
-    .benefits{ grid-template-columns:1fr 1fr; }
-    .benefit:nth-child(2n){ border-right:none; }
-    .potencia-grid{ grid-template-columns:1fr 1fr; }
-    .case{ grid-template-columns:1fr; }
-    .case-art{ border-right:none; border-bottom:1px solid var(--filete); }
-    .about-panel{ grid-template-columns:1fr; }
-    .about-art{ border-right:none; border-bottom:1px solid var(--filete); }
-    .plans{ grid-template-columns:1fr; }
-    .form-panel{ grid-template-columns:1fr; }
-    .foot-grid{ grid-template-columns:1fr 1fr; gap:32px; }
-    .foot-brand{ grid-column:1/-1; }
-  }
-  @media (max-width: 600px){
-    .benefits{ grid-template-columns:1fr; }
-    .potencia-grid{ grid-template-columns:1fr; }
-    .clients{ gap:20px 32px; }
-    .benefit{ border-right:none !important; }
-    .services-grid{ grid-template-columns:1fr; }
-    .service-card{ border-right:none !important; }
-    .field-row{ grid-template-columns:1fr; }
-    .sheet-note{ text-align:left; }
-    .foot-grid{ grid-template-columns:1fr; }
-  }
-</style>
+<link rel="stylesheet" href="styles.css">
 <noscript><style>.reveal,.lvl{opacity:1 !important; transform:none !important;}</style></noscript>
 </head>
 <body>
@@ -862,8 +106,8 @@
       </div>
       <a href="#proyectos">Proyectos</a>
       <a href="#clientes">Clientes</a>
-      <a href="#nosotros">Nosotros</a>
-      <a href="#faq">Preguntas</a>
+      <a href="nosotros.html">Nosotros</a>
+      <a href="faq.html">Preguntas</a>
       <a href="#contacto">Contacto</a>
     </nav>
     <a href="#contacto" class="nav-cta">Empezar un proyecto</a>
@@ -879,8 +123,8 @@
     <a href="#servicio-capacitacion" class="sub">— Capacitación</a>
     <a href="#proyectos">Proyectos</a>
     <a href="#clientes">Clientes</a>
-    <a href="#nosotros">Nosotros</a>
-    <a href="#faq">Preguntas frecuentes</a>
+    <a href="nosotros.html">Nosotros</a>
+    <a href="faq.html">Preguntas frecuentes</a>
     <a href="#contacto">Contacto</a>
     <a href="#contacto" class="nav-cta" style="margin-top:16px;text-align:center;">Empezar un proyecto</a>
   </div>
@@ -892,10 +136,31 @@
   <section class="hero">
     <div class="hero-panel">
       <div class="hero-atmosphere" aria-hidden="true">
-        <svg class="atmo-hex hex-a" aria-hidden="true" viewBox="0 0 200 200" xmlns="http://www.w3.org/2000/svg" fill="none" stroke="#FFFFFF" stroke-width="1.1" stroke-linecap="square" stroke-linejoin="miter">
-          <polygon points="100,20 176,64 100,108 24,64"></polygon>
-          <polygon points="100,20 176,64 176,152 100,196 24,152 24,64"></polygon>
-          <line x1="100" y1="108" x2="100" y2="196"></line><line x1="100" y1="108" x2="24" y2="64"></line><line x1="100" y1="108" x2="176" y2="64"></line>
+        <svg class="atmo-hex hex-a" aria-hidden="true" viewBox="0 0 400 560" xmlns="http://www.w3.org/2000/svg">
+          <g stroke="#FFFFFF" stroke-opacity="0.16" stroke-width="1.2">
+            <line x1="124" y1="90" x2="124" y2="220"></line>
+            <line x1="276" y1="90" x2="276" y2="220"></line>
+            <line x1="124" y1="220" x2="124" y2="350"></line>
+            <line x1="276" y1="220" x2="276" y2="350"></line>
+            <line x1="124" y1="350" x2="124" y2="480"></line>
+            <line x1="276" y1="350" x2="276" y2="480"></line>
+          </g>
+          <polyline points="160,235 160,255 240,255 240,275 160,275 160,295" fill="none" stroke="#4FE6DE" stroke-opacity="0.30" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"></polyline>
+          <g class="bim-layer bim-layer-1">
+            <polygon points="200,46 276,90 200,134 124,90" fill="#4FE6DE" fill-opacity="0.16" stroke="#FFFFFF" stroke-opacity="0.24" stroke-width="1.2"></polygon>
+          </g>
+          <g class="bim-layer bim-layer-2">
+            <polygon points="200,176 276,220 200,264 124,220" fill="#1C93A0" fill-opacity="0.24" stroke="#FFFFFF" stroke-opacity="0.22" stroke-width="1.2"></polygon>
+          </g>
+          <g class="bim-layer bim-layer-3">
+            <polygon points="200,306 276,350 200,394 124,350" fill="#8FD0D6" fill-opacity="0.20" stroke="#FFFFFF" stroke-opacity="0.22" stroke-width="1.2"></polygon>
+          </g>
+          <g class="bim-layer bim-layer-4">
+            <polygon points="200,436 276,480 200,524 124,480" fill="#F3F1ED" fill-opacity="0.12" stroke="#FFFFFF" stroke-opacity="0.26" stroke-width="1.2"></polygon>
+          </g>
+          <circle cx="200" cy="90" r="3" fill="#4FE6DE" fill-opacity="0.6"></circle>
+          <circle cx="124" cy="220" r="3" fill="#4FE6DE" fill-opacity="0.6"></circle>
+          <circle cx="276" cy="350" r="3" fill="#4FE6DE" fill-opacity="0.6"></circle>
         </svg>
         <svg class="atmo-hex hex-b" aria-hidden="true" viewBox="0 0 200 200" xmlns="http://www.w3.org/2000/svg" fill="none" stroke="#FFFFFF" stroke-width="1.1" stroke-linecap="square" stroke-linejoin="miter">
           <polygon points="100,20 176,64 100,108 24,64"></polygon>
@@ -1046,49 +311,12 @@
     </div>
   </section>
 
-  <!-- ================= POR QUÉ BIM ================= -->
-  <section class="sheet" id="por-que-bim">
-    <div class="wrap">
-      <div class="sheet-head reveal">
-        <div>
-          <p class="sheet-label">L-01 · Por qué BIM</p>
-          <h2>Un modelo. Cero reprocesos.</h2>
-        </div>
-        <p class="sheet-note">Lo que cambia en el día a día del estudio cuando arquitectura, estructura e instalaciones comparten un mismo archivo.</p>
-      </div>
-    </div>
-    <div class="wrap" style="padding:0;">
-      <div class="benefits reveal">
-        <div class="benefit">
-          <div class="bubble mono">1</div>
-          <h4>Menos horas de dibujo</h4>
-          <p>El modelo genera planos, cortes y vistas automáticamente: se corrige una vez y se actualiza en todos lados.</p>
-        </div>
-        <div class="benefit">
-          <div class="bubble mono">2</div>
-          <h4>Interferencias antes de obra</h4>
-          <p>Cruzamos estructura, instalaciones y arquitectura en el mismo archivo para resolver choques en pantalla, no en el sitio.</p>
-        </div>
-        <div class="benefit">
-          <div class="bubble mono">3</div>
-          <h4>Cómputos confiables</h4>
-          <p>Cantidades y superficies salen directo del modelo, no de una planilla aparte que alguien olvida actualizar.</p>
-        </div>
-        <div class="benefit">
-          <div class="bubble mono">4</div>
-          <h4>Un archivo, todo el equipo</h4>
-          <p>Arquitectura, ingeniería y dirección de obra trabajan sobre la misma información, siempre actualizada.</p>
-        </div>
-      </div>
-    </div>
-  </section>
-
   <!-- ================= PROYECTOS ================= -->
   <section class="sheet" id="proyectos">
     <div class="wrap">
       <div class="sheet-head reveal">
         <div>
-          <p class="sheet-label">L-02 · Proyectos</p>
+          <p class="sheet-label">L-01 · Proyectos</p>
           <h2>De anteproyecto a obra, en un mismo modelo.</h2>
         </div>
         <p class="sheet-note">Ejemplo de proyecto documentado íntegramente en BIM por ARCHBIM Studio.</p>
@@ -1140,13 +368,13 @@
     <div class="wrap">
       <div class="sheet-head reveal">
         <div>
-          <p class="sheet-label">L-03 · Clientes</p>
+          <p class="sheet-label">L-02 · Clientes</p>
           <h2>Estudios de arquitectura e ingeniería que ya trabajan en BIM con nosotros.</h2>
         </div>
       </div>
 
       <div class="clients reveal">
-        <div class="client"><img class="client-logo" src="logos/logo-bma.jpg" alt="BMA Arquitectos Asociados"></div>
+        <div class="client"><img class="client-logo" src="logos/logo-bma.png" alt="BMA Arquitectos Asociados"></div>
         <div class="client"><img class="client-logo" src="logos/logo-dipa.png" alt="DIPA Arquitectos"></div>
         <div class="client"><img class="client-logo" src="logos/logo-rdr.svg" alt="RDR Arquitectos"></div>
         <div class="client"><img class="client-logo" src="logos/logo-clusellas.png" alt="Estudio Clusellas — Clusellas + Ades"></div>
@@ -1158,44 +386,12 @@
     </div>
   </section>
 
-  <!-- ================= NOSOTROS ================= -->
-  <section class="sheet" id="nosotros">
-    <div class="wrap">
-      <div class="sheet-head reveal">
-        <div>
-          <p class="sheet-label">L-04 · Nosotros</p>
-          <h2>Coordinación con nombre y apellido.</h2>
-        </div>
-        <p class="sheet-note">Un solo interlocutor técnico, del anteproyecto a la documentación ejecutiva.</p>
-      </div>
-
-      <div class="about-panel reveal">
-        <div class="about-art">
-          <div class="about-mark mono">ND</div>
-          <p class="about-role">BIM Manager — Coordinador</p>
-        </div>
-        <div class="about-body">
-          <h3>Norberto Dorantes</h3>
-          <p class="about-title mono">Coordinador de ARCHBIM Studio</p>
-          <p class="desc">Norberto coordina cada proyecto de punta a punta: define el estándar de modelado, audita el archivo y es el interlocutor único entre tu estudio y el modelo. Formado como GRAPHISOFT Certified Archicad BIM Manager, con foco en coordinación de disciplinas y documentación para obra.</p>
-          <p class="desc">Un solo responsable de la coordinación evita lo que más atrasa un proyecto BIM: que nadie sepa quién resuelve una interferencia. En ARCHBIM, esa persona tiene nombre y apellido.</p>
-          <div class="about-meta">
-            <div><div class="k">Rol</div>BIM Manager & Coordinador</div>
-            <div><div class="k">Formación</div>GRAPHISOFT Certified Archicad BIM Manager</div>
-            <div><div class="k">Sede</div>Buenos Aires, Argentina</div>
-          </div>
-          <div class="about-cta"><a href="#contacto" class="alt-link">Coordinar tu proyecto con Norberto →</a></div>
-        </div>
-      </div>
-    </div>
-  </section>
-
   <!-- ================= PLANES / CÓMO EMPEZAR ================= -->
   <section class="sheet" id="planes">
     <div class="wrap">
       <div class="sheet-head reveal">
         <div>
-          <p class="sheet-label">L-05 · Cómo empezar</p>
+          <p class="sheet-label">L-03 · Cómo empezar</p>
           <h2>Elegí el alcance. Nosotros ponemos el flujo.</h2>
         </div>
         <p class="sheet-note">Contanos en qué punto está tu estudio y armamos el alcance juntos.</p>
@@ -1240,47 +436,12 @@
     </div>
   </section>
 
-  <!-- ================= FAQ ================= -->
-  <section class="sheet" id="faq">
-    <div class="wrap">
-      <div class="sheet-head reveal">
-        <div>
-          <p class="sheet-label">L-06 · Preguntas frecuentes</p>
-          <h2>¿Tenés más preguntas?</h2>
-        </div>
-      </div>
-
-      <div class="faq reveal">
-        <details>
-          <summary>¿Necesito tener ArchiCAD para trabajar con ustedes?<span class="plus"></span></summary>
-          <p class="faq-a">No. Nosotros modelamos en ArchiCAD, pero coordinamos con estudios que trabajan en Revit u otro software BIM mediante formatos abiertos (IFC).</p>
-        </details>
-        <details>
-          <summary>¿Cuánto tarda una implementación BIM?<span class="plus"></span></summary>
-          <p class="faq-a">Depende del tamaño del estudio y de cuántas plantillas y estándares ya tengan armados. En general, entre 4 y 8 semanas para dejar el flujo funcionando sobre un proyecto piloto.</p>
-        </details>
-        <details>
-          <summary>¿Trabajan proyectos completos o solo consultoría puntual?<span class="plus"></span></summary>
-          <p class="faq-a">Las dos cosas. Podemos modelar tu proyecto de punta a punta, o sumarnos como BIM Manager externo en un proyecto que ya está en curso.</p>
-        </details>
-        <details>
-          <summary>¿Qué incluye la documentación ejecutiva?<span class="plus"></span></summary>
-          <p class="faq-a">Planos técnicos, detalles constructivos y cómputos, listos para licitar y construir — generados desde el mismo modelo que la documentación de anteproyecto.</p>
-        </details>
-        <details>
-          <summary>¿Cuándo abre la capacitación en línea?<span class="plus"></span></summary>
-          <p class="faq-a">Está en desarrollo. Dejanos tu contacto en el formulario y te avisamos apenas esté disponible.</p>
-        </details>
-      </div>
-    </div>
-  </section>
-
   <!-- ================= CONTACTO ================= -->
   <section class="sheet" id="contacto">
     <div class="wrap">
       <div class="sheet-head reveal">
         <div>
-          <p class="sheet-label">L-07 · Contacto</p>
+          <p class="sheet-label">L-04 · Contacto</p>
           <h2>Contanos sobre tu proyecto.</h2>
         </div>
         <p class="sheet-note">Respondemos en uno o dos días hábiles.</p>
@@ -1365,8 +526,8 @@
         <a href="#top">Home</a>
         <a href="#proyectos">Proyectos</a>
         <a href="#clientes">Clientes</a>
-        <a href="#nosotros">Nosotros</a>
-        <a href="#faq">Preguntas</a>
+        <a href="nosotros.html">Nosotros</a>
+        <a href="faq.html">Preguntas</a>
       </div>
       <div class="foot-col">
         <h5>Contacto</h5>
@@ -1381,53 +542,8 @@
   </div>
 </footer>
 
+<script src="main.js"></script>
 <script>
-  // mobile nav
-  const burger = document.getElementById('burgerBtn');
-  burger.addEventListener('click', () => {
-    const open = document.body.classList.toggle('nav-open');
-    burger.setAttribute('aria-expanded', open ? 'true' : 'false');
-  });
-  document.querySelectorAll('.mobile-panel a').forEach(a=>{
-    a.addEventListener('click', ()=> document.body.classList.remove('nav-open'));
-  });
-
-  // desktop services dropdown (click-toggle, accessible; CSS handles hover as enhancement)
-  const ddWrap = document.getElementById('servicesDropdown');
-  const ddBtn = document.getElementById('dropdownBtn');
-  ddBtn.addEventListener('click', (e)=>{
-    e.stopPropagation();
-    const open = ddWrap.classList.toggle('open');
-    ddBtn.setAttribute('aria-expanded', open ? 'true' : 'false');
-  });
-  document.addEventListener('click', (e)=>{
-    if(!ddWrap.contains(e.target)){ ddWrap.classList.remove('open'); ddBtn.setAttribute('aria-expanded','false'); }
-  });
-  document.addEventListener('keydown', (e)=>{
-    if(e.key === 'Escape'){ ddWrap.classList.remove('open'); ddBtn.setAttribute('aria-expanded','false'); }
-  });
-  ddWrap.querySelectorAll('.dropdown-item, .dropdown-foot a').forEach(a=>{
-    a.addEventListener('click', ()=>{ ddWrap.classList.remove('open'); ddBtn.setAttribute('aria-expanded','false'); });
-  });
-
-  // scroll reveal
-  const revealEls = document.querySelectorAll('.reveal');
-  const heroVisual = document.getElementById('heroVisual');
-  const io = new IntersectionObserver((entries)=>{
-    entries.forEach(entry=>{
-      if(entry.isIntersecting){
-        entry.target.classList.add('in-view');
-        io.unobserve(entry.target);
-      }
-    });
-  }, {threshold:0.12});
-  revealEls.forEach(el=>io.observe(el));
-  // safety net: if something never intersects, reveal anyway
-  setTimeout(()=>{ revealEls.forEach(el=>el.classList.add('in-view')); heroVisual.classList.add('in-view'); }, 2500);
-
-  // hero visual reveals shortly after load regardless of scroll (it's above the fold)
-  requestAnimationFrame(()=> setTimeout(()=> heroVisual.classList.add('in-view'), 150));
-
   // contact form: prefill service from links across the page, fake submit
   document.querySelectorAll('[data-service]').forEach(link=>{
     link.addEventListener('click', ()=>{

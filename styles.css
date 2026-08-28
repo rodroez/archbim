@@ -45,7 +45,7 @@ a:focus-visible, button:focus-visible, summary:focus-visible, input:focus-visibl
   padding-left:var(--pad);
   padding-right:var(--pad);
 }
-section[id], .service-card[id]{ scroll-margin-top:96px; }
+section[id], .plan-card[id]{ scroll-margin-top:96px; }
 
 /* ---------- eyebrow / sheet label ---------- */
 .sheet-label{
@@ -399,33 +399,6 @@ section.sheet + section.sheet{ border-top:1px solid var(--filete); }
   text-align:right;
 }
 
-/* ---------- services grid ---------- */
-.services-grid{
-  display:grid;
-  grid-template-columns:repeat(2,1fr);
-  border-top:1px solid var(--filete);
-  border-left:1px solid var(--filete);
-}
-.service-card{
-  border-right:1px solid var(--filete);
-  border-bottom:1px solid var(--filete);
-  padding:clamp(26px,3vw,38px);
-  display:flex;
-  flex-direction:column;
-}
-.service-card .top-row{ display:flex; align-items:center; gap:12px; margin-bottom:16px; flex-wrap:wrap; }
-.service-card h3{ font-size:clamp(18px,1.9vw,22px); font-weight:600; margin:0; letter-spacing:-0.01em; }
-.service-card p{ font-size:14.5px; color:var(--descriptor); margin:0 0 18px; flex-grow:1; }
-.service-card .tag-row{ display:flex; gap:8px; flex-wrap:wrap; margin:-6px 0 18px; }
-.service-card .tag{
-  font-family:"IBM Plex Mono", monospace;
-  font-size:11px; letter-spacing:.02em;
-  color:var(--accent-deep);
-  background:var(--accent-tint);
-  border:1px solid var(--accent-light);
-  padding:4px 9px;
-}
-.service-card .alt-link{ margin-top:auto; align-self:flex-start; }
 .alt-link{
   font-family:"IBM Plex Mono", monospace;
   font-size:13px;
@@ -567,10 +540,10 @@ section.sheet + section.sheet{ border-top:1px solid var(--filete); }
 .client-logo-boost{ max-height:50px; }
 .mark-lg{ width:42px; height:42px; font-size:12px; border-radius:8px; }
 
-/* ---------- planes / como empezar ---------- */
+/* ---------- servicios (reuses the former "planes" card design) ---------- */
 .plans{
   display:grid;
-  grid-template-columns:repeat(3,1fr);
+  grid-template-columns:repeat(4,1fr);
   gap:1px;
   background:var(--filete);
   border:1px solid var(--filete);
@@ -726,7 +699,7 @@ footer{ background:var(--ink); color:var(--paper); padding:72px 0 0; }
   .case-art{ border-right:none; border-bottom:1px solid var(--filete); }
   .about-panel{ grid-template-columns:1fr; }
   .about-art{ border-right:none; border-bottom:1px solid var(--filete); }
-  .plans{ grid-template-columns:1fr; }
+  .plans{ grid-template-columns:1fr 1fr; }
   .form-panel{ grid-template-columns:1fr; }
   .foot-grid{ grid-template-columns:1fr 1fr; gap:32px; }
   .foot-brand{ grid-column:1/-1; }
@@ -734,8 +707,7 @@ footer{ background:var(--ink); color:var(--paper); padding:72px 0 0; }
 @media (max-width: 600px){
   .potencia-grid{ grid-template-columns:1fr; }
   .clients{ gap:20px 32px; }
-  .services-grid{ grid-template-columns:1fr; }
-  .service-card{ border-right:none !important; }
+  .plans{ grid-template-columns:1fr; }
   .field-row{ grid-template-columns:1fr; }
   .sheet-note{ text-align:left; }
   .foot-grid{ grid-template-columns:1fr; }

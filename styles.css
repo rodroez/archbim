@@ -216,30 +216,20 @@ body.nav-open .mobile-panel{ display:flex; }
     linear-gradient(155deg, #0A0C0E 0%, #0B2A2E 52%, #0A3A40 100%);
   padding:clamp(56px,8vw,104px) 0;
 }
-.hero-atmosphere{
-  position:absolute; inset:0;
+.hero-panel::before{
+  content:"";
+  position:absolute;
+  inset:0;
   z-index:0;
+  background-image:url('images/hero-bim-mep.webp');
+  background-size:cover;
+  background-repeat:no-repeat;
+  background-position:70% center;
+  opacity:0.85;
+  -webkit-mask-image:linear-gradient(100deg, transparent 0%, transparent 26%, black 56%, black 100%);
+  mask-image:linear-gradient(100deg, transparent 0%, transparent 26%, black 56%, black 100%);
   pointer-events:none;
-  background-image:radial-gradient(rgba(255,255,255,0.055) 1px, transparent 1px);
-  background-size:24px 24px;
-  animation:gridDrift 60s linear infinite;
 }
-.atmo-hex{ position:absolute; }
-.hex-a{ right:-14%; bottom:-16%; width:46%; max-width:400px; height:auto; animation:floatA 26s ease-in-out infinite; }
-.hex-b{ left:-10%; top:4%; width:30%; max-width:230px; height:auto; opacity:0.09; animation:floatB 28s ease-in-out infinite; }
-.hex-c{ right:6%; top:-8%; width:19%; max-width:150px; height:auto; opacity:0.11; animation:floatC 34s ease-in-out infinite; }
-@keyframes gridDrift{ from{ background-position:0 0; } to{ background-position:240px 240px; } }
-@keyframes floatA{ 0%,100%{ transform:translate(0,0) rotate(0deg); } 50%{ transform:translate(-10px,8px) rotate(1.5deg); } }
-@keyframes bimBreathe1{ 0%,100%{ transform:translateY(0); } 50%{ transform:translateY(-7px); } }
-@keyframes bimBreathe2{ 0%,100%{ transform:translateY(0); } 50%{ transform:translateY(5px); } }
-@keyframes bimBreathe3{ 0%,100%{ transform:translateY(0); } 50%{ transform:translateY(-5px); } }
-@keyframes bimBreathe4{ 0%,100%{ transform:translateY(0); } 50%{ transform:translateY(7px); } }
-.bim-layer-1{ animation:bimBreathe1 7s ease-in-out infinite; }
-.bim-layer-2{ animation:bimBreathe2 8.5s ease-in-out infinite; }
-.bim-layer-3{ animation:bimBreathe3 7.8s ease-in-out infinite; }
-.bim-layer-4{ animation:bimBreathe4 9.2s ease-in-out infinite; }
-@keyframes floatB{ 0%,100%{ transform:translate(0,0) rotate(0deg); } 50%{ transform:translate(11px,-13px) rotate(-4deg); } }
-@keyframes floatC{ 0%,100%{ transform:translate(0,0) rotate(0deg); } 50%{ transform:translate(-9px,9px) rotate(4deg); } }
 .hero-grid{
   position:relative;
   z-index:1;
@@ -685,7 +675,6 @@ footer{ background:var(--ink); color:var(--paper); padding:72px 0 0; }
 @media (prefers-reduced-motion: reduce){
   html{ scroll-behavior:auto; }
   .reveal, .lvl{ opacity:1 !important; transform:none !important; transition:none !important; }
-  .hero-atmosphere, .atmo-hex, [class^="bim-layer"]{ animation:none !important; }
 }
 
 /* ================= RESPONSIVE ================= */
@@ -694,7 +683,6 @@ footer{ background:var(--ink); color:var(--paper); padding:72px 0 0; }
   .nav-cta{ display:none; }
   .burger{ display:flex; }
   .hero-grid{ grid-template-columns:1fr; }
-  .hex-a{ width:64%; }
   .hero-visual svg{ max-width:220px; }
   .potencia-grid{ grid-template-columns:1fr 1fr; }
   .case{ grid-template-columns:1fr; }

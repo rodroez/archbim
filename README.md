@@ -39,15 +39,11 @@ vercel        # deploy de prueba
 vercel --prod # deploy a producción
 ```
 
-## Importante: actualizar el dominio real
+## Dominio
 
-Dejé `https://archbim-studio.vercel.app/` como dominio de referencia en varios lugares (para que las previsualizaciones y el SEO funcionen bien apenas se suba). Una vez que sepas la URL final — la que te da Vercel automáticamente, o un dominio propio que conectes — reemplazá ese texto en estos archivos:
+El dominio real es **`https://archbim.com.ar/`** (registrado en NIC Argentina, DNS delegado a Cloudflare, apuntando al proyecto `archbim-studio` de Vercel). Es el que aparece como referencia en `index.html`, `nosotros.html`, `faq.html`, `robots.txt` y `sitemap.xml` (etiquetas `og:url`, `og:image`, `twitter:image`, `canonical`, JSON-LD, `Sitemap:` y `<loc>`).
 
-- `index.html` y `nosotros.html` — las etiquetas `og:url`, `og:image`, `twitter:image`, `canonical`, y la URL dentro del bloque `<script type="application/ld+json">`.
-- `robots.txt` — la línea `Sitemap:`.
-- `sitemap.xml` — las etiquetas `<loc>`.
-
-Es un buscar-y-reemplazar del dominio en esos archivos, nada más.
+`archbim-studio.vercel.app` sigue existiendo como subdominio que Vercel asigna automáticamente al proyecto, pero no es el dominio público — si alguna vez cambia el dominio real, es el mismo buscar-y-reemplazar en esos archivos.
 
 ## Qué se optimizó para este deploy
 

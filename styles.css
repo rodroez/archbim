@@ -213,22 +213,11 @@ body.nav-open .mobile-panel{ display:flex; }
   overflow:hidden;
   background:
     radial-gradient(circle at 88% 8%, rgba(143,208,214,0.16), transparent 42%),
-    linear-gradient(155deg, #0A0C0E 0%, #0B2A2E 52%, #0A3A40 100%);
+    linear-gradient(90deg, rgba(8,10,12,0.92) 0%, rgba(8,10,12,0.55) 45%, rgba(8,10,12,0.12) 100%),
+    url('images/hero-dynamic.jpg');
+  background-size:auto, auto, cover;
+  background-position:center, center, center;
   padding:clamp(56px,8vw,104px) 0;
-}
-.hero-panel::before{
-  content:"";
-  position:absolute;
-  inset:0;
-  z-index:0;
-  background-image:url('images/hero-bim-mep.webp');
-  background-size:cover;
-  background-repeat:no-repeat;
-  background-position:70% center;
-  opacity:0.85;
-  -webkit-mask-image:linear-gradient(100deg, transparent 0%, transparent 26%, black 56%, black 100%);
-  mask-image:linear-gradient(100deg, transparent 0%, transparent 26%, black 56%, black 100%);
-  pointer-events:none;
 }
 .hero-grid{
   position:relative;

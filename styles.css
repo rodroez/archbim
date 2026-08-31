@@ -216,7 +216,7 @@ body.nav-open .mobile-panel{ display:flex; }
     linear-gradient(90deg, rgba(8,10,12,0.92) 0%, rgba(8,10,12,0.55) 45%, rgba(8,10,12,0.12) 100%),
     url('images/hero-dynamic.jpg');
   background-size:auto, auto, cover;
-  background-position:center, center, center;
+  background-position:center, center, center 22%;
   padding:clamp(56px,8vw,104px) 0;
 }
 .hero-grid{

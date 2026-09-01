@@ -517,8 +517,13 @@ section.sheet + section.sheet{ border-top:1px solid var(--filete); }
   align-items:center;
   gap:16px;
 }
-.client-logo{ display:block; max-height:38px; width:auto; }
-.client-logo-boost{ max-height:50px; }
+.client-logo{ display:block; max-height:52px; max-width:125px; width:auto; }
+.client-logo-boost{ max-height:68px; }
+/* RDR's file is a wider lockup (mark + "arquitectos" tagline in one image), not a bare wordmark like the others — exempt it from the width cap instead of squeezing that extra text unreadably thin. */
+.client-logo[src*="logo-rdr"]{ max-width:none; }
+/* DIPA and Clusellas use thin/light letterforms with a lot of internal transparent margin, so at the same box size their ink reads noticeably lighter/smaller than the bold marks (BMA, MDS) — give them a bit more room to close that optical gap. */
+.client-logo[src*="logo-dipa"]{ max-height:60px; max-width:148px; }
+.client-logo[src*="logo-clusellas"]{ max-height:60px; max-width:140px; }
 .mark-lg{ width:42px; height:42px; font-size:12px; border-radius:8px; }
 
 /* ---------- servicios (reuses the former "planes" card design) ---------- */
